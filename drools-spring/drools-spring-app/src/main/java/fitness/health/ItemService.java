@@ -1,4 +1,4 @@
-package sbnz.integracija.example;
+package fitness.health;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -7,17 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sbnz.integracija.example.facts.Item;
+import fitness.health.model.Item;
 
 @Service
-public class SampleAppService {
+public class ItemService {
 
-	private static Logger log = LoggerFactory.getLogger(SampleAppService.class);
+	private static Logger log = LoggerFactory.getLogger(ItemService.class);
 
 	private final KieContainer kieContainer;
 
 	@Autowired
-	public SampleAppService(KieContainer kieContainer) {
+	public ItemService(KieContainer kieContainer) {
 		log.info("Initialising a new example session.");
 		this.kieContainer = kieContainer;
 	}

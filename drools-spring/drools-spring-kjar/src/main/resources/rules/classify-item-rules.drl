@@ -1,6 +1,6 @@
-package sbnz.integracija;
+package rules;
 
-import sbnz.integracija.example.facts.Item;
+import fitness.health.model.Item;
 
 
 rule "Classify Item - Low Range"

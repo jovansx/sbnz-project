@@ -1,4 +1,4 @@
-package sbnz.integracija.example.facts;
+package fitness.health.model;
 
 import java.io.Serializable;
 import java.util.Objects;

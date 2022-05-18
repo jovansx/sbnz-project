@@ -1,4 +1,4 @@
-package sbnz.integracija.example;
+package fitness.health;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,18 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import sbnz.integracija.example.facts.Item;
+import fitness.health.model.Item;
 
 @RestController
-public class SampleAppController {
-	private static Logger log = LoggerFactory.getLogger(SampleAppController.class);
-
-	private final SampleAppService sampleService;
+public class ItemController {
+	private static Logger log = LoggerFactory.getLogger(ItemController.class);
 
 	@Autowired
-	public SampleAppController(SampleAppService sampleService) {
-		this.sampleService = sampleService;
-	}
+	private ItemService itemService;
 
 	@RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
 	public Item getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
@@ -29,7 +25,7 @@ public class SampleAppController {
 
 		log.debug("Item request received for: " + newItem);
 
-		Item i2 = sampleService.getClassifiedItem(newItem);
+		Item i2 = itemService.getClassifiedItem(newItem);
 
 		return i2;
 	}
