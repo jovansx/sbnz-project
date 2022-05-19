@@ -29,10 +29,6 @@ public class User {
 		return gender;
 	}
 	
-	public DietType getDietType() {
-		return dietType;
-	}
-	
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
