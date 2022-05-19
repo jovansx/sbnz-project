@@ -5,14 +5,13 @@ import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class FitnessHealthApp {
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(FitnessHealthApp.class, args);
+		SpringApplication.run(FitnessHealthApp.class, args);
 	}
 
 	@Bean
