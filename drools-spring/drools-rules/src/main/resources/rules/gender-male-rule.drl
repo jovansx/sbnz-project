@@ -1,0 +1,12 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.enums.Gender;
+
+rule "Classify Gender Constant - Male"
+    when
+        $u: User( gender == Gender.MALE )
+    then
+        $u.setGenderCoefficient(5);
+        update($u);
+end

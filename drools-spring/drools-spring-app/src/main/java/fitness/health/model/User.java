@@ -22,4 +22,27 @@ public class User {
 	private List<RiskIngredients> riskIngredients;
 	private UserGoal userGoal;
 	private List<Injury> injuries;
+//	--- Fields which drools will calculate
+	private int genderCoefficient;
+
+	public Gender getGender() {
+		return gender;
+	}
+	
+	public DietType getDietType() {
+		return dietType;
+	}
+	
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public int getGenderCoefficient() {
+		return genderCoefficient;
+	}
+
+	public void setGenderCoefficient(int genderCoefficient) {
+		this.genderCoefficient = genderCoefficient;
+	}
+
 }
