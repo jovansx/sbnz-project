@@ -2,12 +2,24 @@ package fitness.health.model;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.RiskIngredients;
 
+@Entity
 public class Foodstuff {
+	@Id
 	private String name;
+	@ElementCollection(targetClass = DietType.class)
+	@Enumerated(EnumType.STRING)
 	private List<DietType> belongsToDiets;
+	@ElementCollection(targetClass = RiskIngredients.class)
+	@Enumerated(EnumType.STRING)
 	private List<RiskIngredients> riskIngredients;
 	
 	public Foodstuff() {
@@ -20,7 +32,7 @@ public class Foodstuff {
 		this.belongsToDiets = belongsToDiets;
 		this.riskIngredients = riskIngredients;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

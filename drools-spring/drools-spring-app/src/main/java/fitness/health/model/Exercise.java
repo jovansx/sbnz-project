@@ -2,14 +2,26 @@ package fitness.health.model;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.ExerciseIntensity;
 import fitness.health.model.enums.ExerciseType;
 
+@Entity
 public class Exercise {
+	@Id
 	private String name;
+	@Enumerated(EnumType.STRING)
 	private ExerciseIntensity intesity;
+	@Enumerated(EnumType.STRING)
 	private ExerciseType type;
+	@ElementCollection(targetClass = BodyPart.class)
+	@Enumerated(EnumType.STRING)
 	private List<BodyPart> activeBodyParts;
 	
 	public Exercise() {
@@ -23,7 +35,7 @@ public class Exercise {
 		this.type = type;
 		this.activeBodyParts = activeBodyParts;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

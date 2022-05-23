@@ -2,22 +2,45 @@ package fitness.health.model;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.Gender;
 import fitness.health.model.enums.RiskIngredients;
 import fitness.health.model.enums.UserGoal;
 
+@Entity
+@Table(name = "USERS")
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private double bodyWeight, height;
 	private int ageInYears, numberOfTrainingPerWeek;
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
+	@ManyToMany
 	private List<Exercise> favoriteExercises;
+	@Enumerated(EnumType.STRING)
 	private DietType dietType;
+	@ElementCollection(targetClass = RiskIngredients.class)
+	@Enumerated(EnumType.STRING)
 	private List<RiskIngredients> riskIngredients;
+	@Enumerated(EnumType.STRING)
 	private UserGoal userGoal;
+	@ManyToMany
 	private List<Injury> injuries;
 //	--- Fields which drools will calculate
 	private int genderCoefficient;
+//	TODO Add other flags and lists
 	
 	public User() {
 		super();
@@ -39,7 +62,15 @@ public class User {
 		this.injuries = injuries;
 		this.genderCoefficient = genderCoefficient;
 	}
+
+	public Long getId() {
+		return id;
+	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public double getBodyWeight() {
 		return bodyWeight;
 	}
