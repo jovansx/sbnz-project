@@ -2,6 +2,8 @@ package fitness.health.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,7 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
+import fitness.health.model.enums.ExerciseType;
 import fitness.health.model.enums.Gender;
 import fitness.health.model.enums.ProgressStrategy;
 import fitness.health.model.enums.RiskIngredients;
@@ -51,10 +55,10 @@ public class User {
 	private UserState currentState;
 	private boolean exercisesAreFiltered;
 	@ManyToMany
-	private List<Exercise> exercises;
+	private List<Exercise> exercises = new ArrayList<Exercise>();
 	private boolean foodIsFiltered;
 	@ManyToMany
-	private List<Foodstuff> foodstufList;
+	private List<Foodstuff> foodstufList = new ArrayList<Foodstuff>();
 	
 	public User() {
 		super();
@@ -74,10 +78,13 @@ public class User {
 		this.riskIngredients = riskIngredients;
 		this.userGoal = userGoal;
 		this.injuries = injuries;
-		this.exercises = new ArrayList<Exercise>();
-		this.foodstufList = new ArrayList<Foodstuff>();
 	}
 
+	public List<Exercise> getFavoriteExerciesForBodyPartWithType(BodyPart bodyPart, ExerciseType type) {
+		return favoriteExercises.stream().filter(e -> e.getType() == type && e.getActiveBodyParts().contains(bodyPart))
+				.collect(Collectors.toList());
+	}
+	
 	public Long getId() {
 		return id;
 	}

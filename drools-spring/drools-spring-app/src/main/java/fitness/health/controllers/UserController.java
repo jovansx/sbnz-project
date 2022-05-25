@@ -24,7 +24,7 @@ public class UserController {
 	@GetMapping
 	public User getMaleUser(@RequestParam("weight") double weight, @RequestParam("height") double height,
 			@RequestParam("gender") Gender gender, @RequestParam("goal") UserGoal goal, @RequestParam("age") int age,
-			@RequestParam("numberOfTrainingPerWeek") int numberOfTrainingPerWeek) {
+			@RequestParam("numberOfTrainingPerWeek") int numberOfTrainingPerWeek, @RequestParam("favoriteExerciseNames") String favoriteExerciseNames) {
 		User user = new User();
 		user.setBodyWeight(weight);
 		user.setHeight(height);
@@ -32,7 +32,7 @@ public class UserController {
 		user.setNumberOfTrainingPerWeek(numberOfTrainingPerWeek);
 		user.setGender(Gender.MALE);
 		user.setUserGoal(goal);
-		return userService.getUpdatedUser(user);
+		return userService.getUpdatedUser(user, favoriteExerciseNames);
 	}
 	
 }
