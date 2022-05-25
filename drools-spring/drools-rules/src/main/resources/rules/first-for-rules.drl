@@ -1,0 +1,22 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.enums.ProgressStrategy;
+import fitness.health.model.enums.ExerciseType;
+import fitness.health.model.enums.BodyPart;
+
+rule "Add exercises - Back"
+    when
+        $u: User( (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
+         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE) &&
+          $favoriteExercises: favoriteExercises )
+          Number(intValue >= 2) from accumulate(
+          Exercise(
+          	item.type == ExerciseType.STRENGTH,
+          	item.activeBodyParts.contains(BodyPart.BACK)
+          )
+          )
+    then
+        $u.setGenderCoefficient(-161);
+        update($u);
+end
