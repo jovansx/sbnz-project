@@ -79,11 +79,6 @@ public class User {
 		this.userGoal = userGoal;
 		this.injuries = injuries;
 	}
-
-	public List<Exercise> getFavoriteExerciesForBodyPartWithType(BodyPart bodyPart, ExerciseType type) {
-		return favoriteExercises.stream().filter(e -> e.getType() == type && e.getActiveBodyParts().contains(bodyPart))
-				.collect(Collectors.toList());
-	}
 	
 	public Long getId() {
 		return id;
