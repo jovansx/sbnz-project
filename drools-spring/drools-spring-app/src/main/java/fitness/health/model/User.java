@@ -79,7 +79,7 @@ public class User {
 		this.userGoal = userGoal;
 		this.injuries = injuries;
 	}
-	
+		
 	public Long getId() {
 		return id;
 	}

@@ -5,6 +5,7 @@ import fitness.health.model.Exercise;
 import fitness.health.model.enums.ProgressStrategy;
 import fitness.health.model.enums.ExerciseType;
 import fitness.health.model.enums.BodyPart;
+import fitness.health.utills.UserHelper;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,25 +16,27 @@ rule "Add some exercises - Back"
          progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
          $favoriteExercises: favoriteExercises,
          $btn: numberOfTrainingPerWeek)
-        $filteredExercises: List(size >= $btn ) from accumulate(
+         $filteredExercises: List(size >= $btn ) from accumulate(
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
-        )
+         )
     then
 	modify($u) {getExercises().addAll($filteredExercises.subList(0, $btn));}
 end
 
 rule "Add all exercises - Back"
     when
-         $u: User(
-        (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
-         $favoriteExercises: favoriteExercises,
-         $btn: numberOfTrainingPerWeek)
-        $filteredExercises: List(size < $btn ) from accumulate(
-            $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
-        )
+		 $u: User(
+		(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
+		 progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+		 $favoriteExercises: favoriteExercises,
+		 $btn: numberOfTrainingPerWeek)
+		 $filteredExercises: List(size < $btn ) from accumulate(
+		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
+		 )
+		 $allExercises: List() from collect(Exercise())
     then
-    modify($u) {getExercises().addAll($filteredExercises);}
+    	$u = UserHelper.addExercises($u, $filteredExercises, $allExercises);
+    update($u);
 end
 
 rule "Add some exercises - Arms"

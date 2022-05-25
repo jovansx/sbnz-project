@@ -35,9 +35,10 @@ public class UserService {
 			exercises.add(optional.get());
 		}
 		u.setFavoriteExercises(exercises);
-		
+		List<Exercise> allExercises = exerciseRepository.findAll();
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(u);
+		kieSession.insert(allExercises);
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return u;
