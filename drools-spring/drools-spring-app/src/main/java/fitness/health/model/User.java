@@ -1,5 +1,6 @@
 package fitness.health.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -14,8 +15,10 @@ import javax.persistence.Table;
 
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.Gender;
+import fitness.health.model.enums.ProgressStrategy;
 import fitness.health.model.enums.RiskIngredients;
 import fitness.health.model.enums.UserGoal;
+import fitness.health.model.enums.UserState;
 
 @Entity
 @Table(name = "USERS")
@@ -40,7 +43,18 @@ public class User {
 	private List<Injury> injuries;
 //	--- Fields which drools will calculate
 	private int genderCoefficient;
-//	TODO Add other flags and lists
+	private double calories;
+	@Enumerated(EnumType.STRING)
+	private ProgressStrategy progressStrategy;
+	private double strategyCoefficient;
+	@Enumerated(EnumType.STRING)
+	private UserState currentState;
+	private boolean exercisesAreFiltered;
+	@ManyToMany
+	private List<Exercise> exercises;
+	private boolean foodIsFiltered;
+	@ManyToMany
+	private List<Foodstuff> foodstufList;
 	
 	public User() {
 		super();
@@ -48,7 +62,7 @@ public class User {
 
 	public User(double bodyWeight, double height, int ageInYears, int numberOfTrainingPerWeek, Gender gender,
 			List<Exercise> favoriteExercises, DietType dietType, List<RiskIngredients> riskIngredients,
-			UserGoal userGoal, List<Injury> injuries, int genderCoefficient) {
+			UserGoal userGoal, List<Injury> injuries) {
 		super();
 		this.bodyWeight = bodyWeight;
 		this.height = height;
@@ -60,7 +74,8 @@ public class User {
 		this.riskIngredients = riskIngredients;
 		this.userGoal = userGoal;
 		this.injuries = injuries;
-		this.genderCoefficient = genderCoefficient;
+		this.exercises = new ArrayList<Exercise>();
+		this.foodstufList = new ArrayList<Foodstuff>();
 	}
 
 	public Long getId() {
@@ -137,4 +152,70 @@ public class User {
 	public void setGenderCoefficient(int genderCoefficient) {
 		this.genderCoefficient = genderCoefficient;
 	}
+
+	public double getCalories() {
+		return calories;
+	}
+
+	public void setCalories(double calories) {
+		this.calories = calories;
+	}
+
+	public ProgressStrategy getProgressStrategy() {
+		return progressStrategy;
+	}
+
+	public void setProgressStrategy(ProgressStrategy progressStrategy) {
+		this.progressStrategy = progressStrategy;
+	}
+
+	public double getStrategyCoefficient() {
+		return strategyCoefficient;
+	}
+
+	public void setStrategyCoefficient(double strategyCoefficient) {
+		this.strategyCoefficient = strategyCoefficient;
+	}
+
+	public UserState getCurrentState() {
+		return currentState;
+	}
+
+	public void setCurrentState(UserState currentState) {
+		this.currentState = currentState;
+	}
+
+	public boolean isExercisesAreFiltered() {
+		return exercisesAreFiltered;
+	}
+
+	public void setExercisesAreFiltered(boolean exercisesAreFiltered) {
+		this.exercisesAreFiltered = exercisesAreFiltered;
+	}
+
+	public List<Exercise> getExercises() {
+		return exercises;
+	}
+
+	public void setExercises(List<Exercise> exercises) {
+		this.exercises = exercises;
+	}
+
+	public boolean isFoodIsFiltered() {
+		return foodIsFiltered;
+	}
+
+	public void setFoodIsFiltered(boolean foodIsFiltered) {
+		this.foodIsFiltered = foodIsFiltered;
+	}
+
+	public List<Foodstuff> getFoodstufList() {
+		return foodstufList;
+	}
+
+	public void setFoodstufList(List<Foodstuff> foodstufList) {
+		this.foodstufList = foodstufList;
+	}
+	
+	
 }

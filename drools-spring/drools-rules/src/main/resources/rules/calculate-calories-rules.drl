@@ -1,0 +1,16 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.enums.UserGoal;
+import fitness.health.model.enums.UserState;
+import fitness.health.model.enums.ProgressStrategy;
+
+rule "Calculate User Calories - Calorie number"
+    when
+        $u: User( strategyCoefficient != 0 && genderCoefficient != 0 )
+    then
+        $u.setCalories((10 * $u.getBodyWeight() + 6.25 * $u.getHeight() - 5 * $u.getAgeInYears()
+         - $u.getGenderCoefficient()) * $u.getStrategyCoefficient() + ($u.getNumberOfTrainingPerWeek() * 150 / 7));
+        update($u);
+end
+

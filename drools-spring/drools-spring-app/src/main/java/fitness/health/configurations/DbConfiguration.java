@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import fitness.health.model.Exercise;
+import fitness.health.model.Foodstuff;
 import fitness.health.model.Injury;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.ExerciseIntensity;
@@ -54,6 +55,8 @@ public class DbConfiguration {
         	Injury i10 = new Injury(BodyPart.LEGS, RecoveryStrategy.REHABILITATION);
         	
         	injuryRepository.saveAll(List.of(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
+        	
+//        	Foodstuff f1 = new Foodstuff();
         };
     }
 }

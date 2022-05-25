@@ -1,0 +1,61 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.enums.UserGoal;
+import fitness.health.model.enums.UserState;
+import fitness.health.model.enums.ProgressStrategy;
+
+rule "Classify User Goal - Low body mass increase"
+    when
+        $u: User( userGoal == UserGoal.BODY_MASS_INCREASE )
+    then
+        $u.setProgressStrategy(ProgressStrategy.LOW_BODY_MASS_INCREASE);
+        $u.setStrategyCoefficient(1.1);
+        update($u);
+end
+
+rule "Classify User Goal - Low body mass loss"
+    when
+        $u: User( userGoal == UserGoal.BODY_MASS_LOSS )
+    then
+        $u.setProgressStrategy(ProgressStrategy.LOW_BODY_MASS_LOSS);
+        $u.setStrategyCoefficient(0.9);
+        update($u);
+end
+
+rule "Classify User Goal - Low body mass maintenance"
+    when
+        $u: User( userGoal == UserGoal.BODY_MASS_MAINTENANCE )
+    then
+        $u.setProgressStrategy(ProgressStrategy.BODY_MASS_MAINTENANCE);
+        $u.setStrategyCoefficient(1);
+        update($u);
+end
+
+rule "Classify User Goal - Body mass increase"
+    when
+        $u: User( userGoal == UserGoal.BODY_MASS_INCREASE && currentState == UserState.INSUFFICIENT_WEIGHT )
+    then
+        $u.setProgressStrategy(ProgressStrategy.BODY_MASS_INCREASE);
+        $u.setStrategyCoefficient(1.2);
+        update($u);
+end
+
+rule "Classify User Goal - Body mass loss"
+    when
+        $u: User( userGoal == UserGoal.BODY_MASS_LOSS && currentState == UserState.FAT )
+    then
+        $u.setProgressStrategy(ProgressStrategy.BODY_MASS_LOSS);
+        $u.setStrategyCoefficient(0.8);
+        update($u);
+end
+
+rule "Classify User Goal - Intense body mass loss"
+    when
+        $u: User( userGoal == UserGoal.BODY_MASS_LOSS && currentState == UserState.VERY_FAT )
+    then
+        $u.setProgressStrategy(ProgressStrategy.HIGH_BODY_MASS_LOSS);
+        $u.setStrategyCoefficient(0.7);
+        update($u);
+end
+
