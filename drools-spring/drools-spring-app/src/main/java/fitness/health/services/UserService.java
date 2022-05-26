@@ -14,6 +14,7 @@ import fitness.health.dtos.AllFoodDTO;
 import fitness.health.model.Exercise;
 import fitness.health.model.Foodstuff;
 import fitness.health.model.User;
+import fitness.health.model.enums.RiskIngredients;
 import fitness.health.repositories.ExerciseRepository;
 import fitness.health.repositories.FoodstuffRepository;
 
@@ -32,9 +33,10 @@ public class UserService {
 		this.foodService = foodService;
 	}
 
-	public User getUpdatedUser(User u, String favoriteExerciseNames) {
-		exerciseService.setUserFavoriteExercises(u, favoriteExerciseNames);		
-				
+	public User getUpdatedUser(User u, String favoriteExerciseNames, String riskIngridientsNames) {
+		exerciseService.setUserFavoriteExercises(u, favoriteExerciseNames);
+		setUserRiskIngridient(u, riskIngridientsNames);
+		
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(u);
 		kieSession.insert(new AllExercisesDTO(exerciseService.getAllExercises()));
@@ -42,6 +44,20 @@ public class UserService {
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return u;
+	}
+	
+	public void setUserRiskIngridient(User u, String riskIngridientsNames) {
+		List<RiskIngredients> riskIngredients = new ArrayList();
+		for (String ingridientName : riskIngridientsNames.split(",")) {
+			try {
+				RiskIngredients i = RiskIngredients.valueOf(ingridientName);
+				riskIngredients.add(i);
+			} catch (Exception e) {
+				throw new RuntimeException("Risk ingridient with name " + ingridientName + " does not exist!");
+			}
+			
+		}
+		u.setRiskIngredients(riskIngredients);
 	}
 
 }

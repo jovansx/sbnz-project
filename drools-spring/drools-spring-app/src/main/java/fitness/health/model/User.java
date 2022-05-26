@@ -125,6 +125,12 @@ public class User {
 		
 	}
 	
+	public void updateFoodstufListWithRiskyIngridients() {
+		RiskIngredients riskIngredient = riskIngredients.get(0);
+		foodstufList = this.foodstufList.stream().filter(f -> !f.getRiskIngredients().contains(riskIngredient)).collect(Collectors.toList());
+		riskIngredients.remove(riskIngredient);
+	}
+	
 	public void updateFoodstufList(AllFoodDTO allFood) {
 		this.foodstufList = allFood.getFoodList().stream().filter(f -> f.getBelongsToDiets().contains(dietType)).collect(Collectors.toList());
 	}

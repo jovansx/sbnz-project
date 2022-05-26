@@ -1,0 +1,15 @@
+package rules;
+
+import fitness.health.model.User;
+
+import fitness.health.events.DietFiltered;
+
+
+rule "Remove food with risky ingridient"
+    when
+        $u: User( $riskIngredients: riskIngredients, $riskIngredients.size != 0)
+        DietFiltered(userId == $u.id)
+    then
+        modify($u) { updateFoodstufListWithRiskyIngridients(); };
+end
+

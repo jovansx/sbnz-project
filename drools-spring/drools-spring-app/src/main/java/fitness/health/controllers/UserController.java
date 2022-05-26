@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import fitness.health.dtos.UserDTO;
 import fitness.health.model.User;
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.Gender;
@@ -23,11 +24,18 @@ public class UserController {
 //	TODO Dodaj opciju da moze razne merne jedinice
 //	TODO Popravi formulu za kalorije
 //	TODO Vidi za povrede sta cete
+//	TODO Vidi da zamenis one dtovoe s obicnom listom i onda mozes koristiti collect
+//	TODO Razmisli da li da bude post ili get
+//	TODO Dodaj jos entiteta u bazu
+//	TODO Baguje nesto broj kalorija
+	
 	@GetMapping
-	public User getMaleUser(@RequestParam("weight") double weight, @RequestParam("height") double height,
+	public UserDTO getPlan(@RequestParam("weight") double weight, @RequestParam("height") double height,
 			@RequestParam("gender") Gender gender, @RequestParam("goal") UserGoal goal, @RequestParam("age") int age,
 			@RequestParam("numberOfTrainingPerWeek") int numberOfTrainingPerWeek,
-			@RequestParam("favoriteExerciseNames") String favoriteExerciseNames, @RequestParam("diet") DietType dietType) {
+			@RequestParam("favoriteExerciseNames") String favoriteExerciseNames, @RequestParam("diet") DietType dietType,
+			@RequestParam("riskIngridientsNames") String riskIngridientsNames
+			) {
 		User user = new User();
 		user.setBodyWeight(weight);
 		user.setHeight(height);
@@ -36,7 +44,8 @@ public class UserController {
 		user.setGender(Gender.MALE);
 		user.setDietType(dietType);
 		user.setUserGoal(goal);
-		return userService.getUpdatedUser(user, favoriteExerciseNames);
+		
+		return new UserDTO(userService.getUpdatedUser(user, favoriteExerciseNames, riskIngridientsNames));
 	}
 	
 }
