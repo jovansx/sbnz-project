@@ -9,6 +9,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fitness.health.dtos.AllExercisesDTO;
 import fitness.health.model.Exercise;
 import fitness.health.model.User;
 import fitness.health.repositories.ExerciseRepository;
@@ -35,10 +36,10 @@ public class UserService {
 			exercises.add(optional.get());
 		}
 		u.setFavoriteExercises(exercises);
-		List<Exercise> allExercises = exerciseRepository.findAll();
+		List<Exercise> allExercises = exerciseRepository.findAllAndFetchAll();
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(u);
-		kieSession.insert(allExercises);
+		kieSession.insert(new AllExercisesDTO(allExercises));
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return u;

@@ -2,7 +2,6 @@ package fitness.health.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.ElementCollection;
@@ -15,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import fitness.health.dtos.AllExercisesDTO;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.ExerciseType;
@@ -78,6 +78,15 @@ public class User {
 		this.riskIngredients = riskIngredients;
 		this.userGoal = userGoal;
 		this.injuries = injuries;
+	}
+	
+	public void addExercises(List<Exercise> filtered, AllExercisesDTO allExercises, BodyPart part, ExerciseType type) {
+		getExercises().addAll(filtered);
+		int howManyToAdd = getNumberOfTrainingPerWeek() - filtered.size();
+		List<Exercise> exercisesCandidates = allExercises.getExercises().stream().filter(
+				e -> !filtered.contains(e) && e.getActiveBodyParts().contains(part) && e.getType() == type)
+				.collect(Collectors.toList());
+		getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
 	}
 		
 	public Long getId() {
