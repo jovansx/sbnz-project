@@ -1,0 +1,36 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.enums.UserState;
+
+rule "Classify User State - Insufficient weight"
+    when
+        $u: User( bodyWeight / (height * height) <= 18.5 )
+    then
+        $u.setCurrentState(UserState.INSUFFICIENT_WEIGHT);
+        update($u);
+end
+
+rule "Classify User State - Normal weight"
+    when
+        $u: User( bodyWeight / (height * height) > 18.5 && bodyWeight / (height * height) <= 25 )
+    then
+        $u.setCurrentState(UserState.NORMAL_WEIGHT);
+        update($u);
+end
+
+rule "Classify User State - Fat"
+    when
+        $u: User( bodyWeight / (height * height) > 25 && bodyWeight / (height * height) <= 30 )
+    then
+        $u.setCurrentState(UserState.FAT);
+        update($u);
+end
+
+rule "Classify User State - Very fat"
+    when
+        $u: User( bodyWeight / (height * height) > 30 )
+    then
+        $u.setCurrentState(UserState.VERY_FAT);
+        update($u);
+end
