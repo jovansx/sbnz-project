@@ -13,6 +13,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise, String> {
 	@Query("select d from Exercise d join fetch d.activeBodyParts i where d.name = (:name)")
     Optional<Exercise> findByExerciseName(String name);
 	
-	@Query("select d from Exercise d join fetch d.activeBodyParts i")
+	@Query("select distinct d from Exercise d join fetch d.activeBodyParts i")
     List<Exercise> findAllAndFetchAll();
 }

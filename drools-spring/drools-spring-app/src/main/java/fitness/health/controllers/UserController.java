@@ -21,6 +21,7 @@ public class UserController {
 //	TODO Ne treba imati sve one flagove u useru vec mozemo samo insertovati i na kraju samo upisati kalorije i vezbe i hranu 9/63
 //	TODO Dodaj opciju da moze razne merne jedinice
 //	TODO Popravi formulu za kalorije
+//	TODO Vidi za povrede sta cete
 	@GetMapping
 	public User getMaleUser(@RequestParam("weight") double weight, @RequestParam("height") double height,
 			@RequestParam("gender") Gender gender, @RequestParam("goal") UserGoal goal, @RequestParam("age") int age,

@@ -1,7 +1,10 @@
 package fitness.health.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.ElementCollection;
@@ -96,6 +99,30 @@ public class User {
 		}
 		
 		getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
+	}
+	
+	public void updateExercises(AllExercisesDTO allExercises) {
+		int initialSize = exercises.size();
+		Set<Exercise> set = new HashSet<>(exercises);
+		exercises.clear();
+		exercises.addAll(set);
+		int currentSize = exercises.size();
+		
+		Exercise firstExercise = exercises.get(0);
+		if(firstExercise.getType() == ExerciseType.CARDIO && initialSize <= 2) {
+//			Loss
+			if(initialSize > currentSize) {
+				List<Exercise> filteredList = allExercises.getExercises().stream().filter(
+						e -> !exercises.contains(e) && e.getType() == ExerciseType.CARDIO).collect(Collectors.toList());
+				exercises.add(filteredList.get(0));
+			}
+		} else {
+//			Maintain and gain
+			List<Exercise> filteredList = allExercises.getExercises().stream().filter(
+					e -> !exercises.contains(e) && e.getType() == ExerciseType.STRENGTH).collect(Collectors.toList());
+			exercises.addAll(filteredList.subList(0, initialSize - currentSize));
+		}
+		
 	}
 		
 	public Long getId() {
