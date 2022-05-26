@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import fitness.health.dtos.AllExercisesDTO;
+import fitness.health.dtos.AllFoodDTO;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.ExerciseType;
@@ -59,7 +60,6 @@ public class User {
 	private boolean exercisesAreFiltered;
 	@ManyToMany
 	private List<Exercise> exercises = new ArrayList<Exercise>();
-	private boolean foodIsFiltered;
 	@ManyToMany
 	private List<Foodstuff> foodstufList = new ArrayList<Foodstuff>();
 	
@@ -123,6 +123,10 @@ public class User {
 			exercises.addAll(filteredList.subList(0, initialSize - currentSize));
 		}
 		
+	}
+	
+	public void updateFoodstufList(AllFoodDTO allFood) {
+		this.foodstufList = allFood.getFoodList().stream().filter(f -> f.getBelongsToDiets().contains(dietType)).collect(Collectors.toList());
 	}
 		
 	public Long getId() {
@@ -246,14 +250,6 @@ public class User {
 
 	public void setExercises(List<Exercise> exercises) {
 		this.exercises = exercises;
-	}
-
-	public boolean isFoodIsFiltered() {
-		return foodIsFiltered;
-	}
-
-	public void setFoodIsFiltered(boolean foodIsFiltered) {
-		this.foodIsFiltered = foodIsFiltered;
 	}
 
 	public List<Foodstuff> getFoodstufList() {

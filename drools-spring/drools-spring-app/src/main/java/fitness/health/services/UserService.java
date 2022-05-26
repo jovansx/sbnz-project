@@ -10,38 +10,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fitness.health.dtos.AllExercisesDTO;
+import fitness.health.dtos.AllFoodDTO;
 import fitness.health.model.Exercise;
+import fitness.health.model.Foodstuff;
 import fitness.health.model.User;
 import fitness.health.repositories.ExerciseRepository;
+import fitness.health.repositories.FoodstuffRepository;
 
 @Service
 public class UserService {
 
 	private final KieContainer kieContainer;
-	private final ExerciseRepository exerciseRepository;
+	
+	private final ExerciseService exerciseService;
+	private final FoodstuffService foodService;
 
 	@Autowired
-	public UserService(KieContainer kieContainer, ExerciseRepository exerciseRepository) {
+	public UserService(KieContainer kieContainer, ExerciseService exerciseService, FoodstuffService foodService) {
 		this.kieContainer = kieContainer;
-		this.exerciseRepository = exerciseRepository;
+		this.exerciseService = exerciseService;
+		this.foodService = foodService;
 	}
 
 	public User getUpdatedUser(User u, String favoriteExerciseNames) {
-		List<Exercise> exercises = new ArrayList();
-		for (String exerciseName : favoriteExerciseNames.split(",")) {
-			Optional<Exercise> optional = exerciseRepository.findByExerciseName(exerciseName);
-			if(optional.isEmpty()) {
-				throw new RuntimeException("Exercise with name " + exerciseName + " does not exist!");
-			}
-			exercises.add(optional.get());
-		}
-		u.setFavoriteExercises(exercises);
-		List<Exercise> allExercises = exerciseRepository.findAllAndFetchAll();
+		exerciseService.setUserFavoriteExercises(u, favoriteExerciseNames);		
+				
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(u);
-		kieSession.insert(new AllExercisesDTO(allExercises));
+		kieSession.insert(new AllExercisesDTO(exerciseService.getAllExercises()));
+		kieSession.insert(new AllFoodDTO(foodService.getAllFood()));
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return u;
 	}
+
 }

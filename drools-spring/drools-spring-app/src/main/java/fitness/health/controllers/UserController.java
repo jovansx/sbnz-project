@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fitness.health.model.User;
+import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.Gender;
 import fitness.health.model.enums.UserGoal;
 import fitness.health.services.UserService;
@@ -25,13 +26,15 @@ public class UserController {
 	@GetMapping
 	public User getMaleUser(@RequestParam("weight") double weight, @RequestParam("height") double height,
 			@RequestParam("gender") Gender gender, @RequestParam("goal") UserGoal goal, @RequestParam("age") int age,
-			@RequestParam("numberOfTrainingPerWeek") int numberOfTrainingPerWeek, @RequestParam("favoriteExerciseNames") String favoriteExerciseNames) {
+			@RequestParam("numberOfTrainingPerWeek") int numberOfTrainingPerWeek,
+			@RequestParam("favoriteExerciseNames") String favoriteExerciseNames, @RequestParam("diet") DietType dietType) {
 		User user = new User();
 		user.setBodyWeight(weight);
 		user.setHeight(height);
 		user.setAgeInYears(age);
 		user.setNumberOfTrainingPerWeek(numberOfTrainingPerWeek);
 		user.setGender(Gender.MALE);
+		user.setDietType(dietType);
 		user.setUserGoal(goal);
 		return userService.getUpdatedUser(user, favoriteExerciseNames);
 	}

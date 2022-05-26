@@ -1,0 +1,38 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.enums.DietType;
+import fitness.health.dtos.AllFoodDTO;
+import fitness.health.events.DietFiltered;
+
+
+rule "Classify Diet - Vegan"
+    when
+        $u: User( dietType == DietType.VEGAN )
+        $allFood: AllFoodDTO()
+        not DietFiltered(userId == $u.id)
+    then
+        modify($u) { updateFoodstufList($allFood); };
+        insert (new DietFiltered($u.getId()));
+        
+end
+
+rule "Classify Diet - Vegeterian"
+    when
+        $u: User( dietType == DietType.VEGETARIAN )
+        $allFood: AllFoodDTO()
+        not DietFiltered(userId == $u.id)
+    then
+        modify($u) { updateFoodstufList($allFood); };
+        insert (new DietFiltered($u.getId()));
+end
+
+rule "Classify Diet - General"
+    when
+        $u: User( dietType == DietType.GENERAL )
+        $allFood: AllFoodDTO()
+        not DietFiltered(userId == $u.id)
+    then
+        modify($u) { updateFoodstufList($allFood); };
+        insert (new DietFiltered($u.getId()));
+end
