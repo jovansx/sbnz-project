@@ -83,9 +83,19 @@ public class User {
 	public void addExercises(List<Exercise> filtered, AllExercisesDTO allExercises, BodyPart part, ExerciseType type) {
 		getExercises().addAll(filtered);
 		int howManyToAdd = getNumberOfTrainingPerWeek() - filtered.size();
-		List<Exercise> exercisesCandidates = allExercises.getExercises().stream().filter(
-				e -> !filtered.contains(e) && e.getActiveBodyParts().contains(part) && e.getType() == type)
-				.collect(Collectors.toList());
+		
+		List<Exercise> exercisesCandidates;
+		if(type == ExerciseType.CARDIO) {
+			howManyToAdd = 2 - filtered.size();
+			exercisesCandidates = allExercises.getExercises().stream().filter(
+					e -> !filtered.contains(e) && e.getType() == type)
+					.collect(Collectors.toList());
+		} else {
+			exercisesCandidates = allExercises.getExercises().stream().filter(
+					e -> !filtered.contains(e) && e.getActiveBodyParts().contains(part) && e.getType() == type)
+					.collect(Collectors.toList());
+		}
+		
 		getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
 	}
 		
