@@ -10,167 +10,176 @@ import fitness.health.model.enums.BodyPart;
 import java.util.List;
 import java.util.stream.Collectors;
 
-rule "Add some exercises - Back"
+rule "Add some exercises for maintenance - Back"
     when
-         $u: User(
-        (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+         $u: User( progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
          $favoriteExercises: favoriteExercises,
          $btn: numberOfTrainingPerWeek)
-         $filteredExercises: List(size >= $btn ) from accumulate(
+         $filteredExercises: List(size >= $btn / 2 ) from accumulate(
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
     then
-	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
+	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn / 2));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.BACK, $u.getId()));
 end
 
-rule "Add all exercises - Back"
+rule "Add all exercises for maintenance - Back"
     when
-		 $u: User(
-		(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-		 progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+		 $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
 		 $favoriteExercises: favoriteExercises,
 		 $btn: numberOfTrainingPerWeek)
-		 $filteredExercises: List(size < $btn ) from accumulate(
+		 $filteredExercises: List(size < $btn / 2) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.BACK, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.BACK, ExerciseType.STRENGTH,  $btn / 2); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.BACK, $u.getId()));
 end
 
-rule "Add some exercises - Arms"
+rule "Add some exercises for maintenance - Arms"
     when
-         $u: User(
-        (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+         $u: User( progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
          $favoriteExercises: favoriteExercises,
          $btn: numberOfTrainingPerWeek)
-         $filteredExercises: List(size >= $btn ) from accumulate(
+         $filteredExercises: List(size >= $btn / 2 ) from accumulate(
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.ARMS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
     then
-	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
+	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn / 2));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.ARMS, $u.getId()));
 end
 
-rule "Add all exercises - Arms"
+rule "Add all exercises for maintenance - Arms"
     when
-		 $u: User(
-		(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-		 progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+		 $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
 		 $favoriteExercises: favoriteExercises,
 		 $btn: numberOfTrainingPerWeek)
-		 $filteredExercises: List(size < $btn ) from accumulate(
+		 $filteredExercises: List(size < $btn / 2) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.ARMS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.ARMS, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.ARMS, ExerciseType.STRENGTH,  $btn / 2); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.ARMS, $u.getId()));
 end
 
-rule "Add some exercises - Legs"
+rule "Add some exercises for maintenance - Legs"
     when
-         $u: User(
-        (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+         $u: User( progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
          $favoriteExercises: favoriteExercises,
          $btn: numberOfTrainingPerWeek)
-         $filteredExercises: List(size >= $btn ) from accumulate(
+         $filteredExercises: List(size >= $btn / 2 ) from accumulate(
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.LEGS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
     then
-	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
+	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn / 2));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.LEGS, $u.getId()));
 end
 
-rule "Add all exercises - Legs"
+rule "Add all exercises for maintenance - Legs"
     when
-		 $u: User(
-		(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-		 progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+		 $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
 		 $favoriteExercises: favoriteExercises,
 		 $btn: numberOfTrainingPerWeek)
-		 $filteredExercises: List(size < $btn ) from accumulate(
+		 $filteredExercises: List(size < $btn / 2) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.LEGS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.LEGS, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.LEGS, ExerciseType.STRENGTH,  $btn / 2); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.LEGS, $u.getId()));
 end
 
-rule "Add some exercises - Core"
+rule "Add some exercises for maintenance - Core"
     when
-         $u: User(
-        (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+         $u: User( progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
          $favoriteExercises: favoriteExercises,
          $btn: numberOfTrainingPerWeek)
-         $filteredExercises: List(size >= $btn ) from accumulate(
+         $filteredExercises: List(size >= $btn / 2 ) from accumulate(
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CORE memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
     then
-	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
+	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn / 2));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CORE, $u.getId()));
 end
 
-rule "Add all exercises - Core"
+rule "Add all exercises for maintenance - Core"
     when
-		 $u: User(
-		(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-		 progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+		 $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
 		 $favoriteExercises: favoriteExercises,
 		 $btn: numberOfTrainingPerWeek)
-		 $filteredExercises: List(size < $btn ) from accumulate(
+		 $filteredExercises: List(size < $btn / 2) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CORE memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CORE, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CORE, ExerciseType.STRENGTH,  $btn / 2); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CORE, $u.getId()));
 end
 
-rule "Add some exercises - Chest"
+rule "Add some exercises for maintenance - Chest"
     when
-         $u: User(
-        (progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+         $u: User( progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
          $favoriteExercises: favoriteExercises,
          $btn: numberOfTrainingPerWeek)
-         $filteredExercises: List(size >= $btn ) from accumulate(
+         $filteredExercises: List(size >= $btn / 2 ) from accumulate(
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CHEST memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
     then
-	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
+	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn / 2));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CHEST, $u.getId()));
 end
 
-rule "Add all exercises - Chest"
+rule "Add all exercises for maintenance - Chest"
     when
-		 $u: User(
-		(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
-		 progressStrategy == ProgressStrategy.BODY_MASS_INCREASE),
+		 $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
 		 $favoriteExercises: favoriteExercises,
 		 $btn: numberOfTrainingPerWeek)
-		 $filteredExercises: List(size < $btn ) from accumulate(
+		 $filteredExercises: List(size < $btn / 2) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CHEST memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CHEST, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CHEST, ExerciseType.STRENGTH,  $btn / 2); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CHEST, $u.getId()));
 end
+
+
+rule "Add some exercises for maintenance - Cardio"
+    when
+         $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
+         $favoriteExercises: favoriteExercises)
+         $filteredExercises: List(size > 0) from accumulate(
+            $e: Exercise(type == ExerciseType.CARDIO) from $favoriteExercises, collectList($e)
+         )
+         not AddedFavoriteCardioExercises(userId == $u.id)
+    then
+	modify($u) { getExercises().addAll($filteredExercises.subList(0, 1));}
+	insert (new AddedFavoriteCardioExercises($u.getId()));
+end
+
+rule "Add all exercises for maintenance - Cardio"
+    when
+		 $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE,
+		 $favoriteExercises: favoriteExercises)
+		 $filteredExercises: List(size == 0 ) from accumulate(
+		    $e: Exercise(type == ExerciseType.CARDIO) from $favoriteExercises, collectList($e)
+		 )
+		 $allExercises: AllExercisesDTO()
+		 not AddedFavoriteCardioExercises(userId == $u.id)
+    then
+    modify($u) { addExercises($filteredExercises, $allExercises, null, ExerciseType.CARDIO, 1); };
+    insert (new AddedFavoriteCardioExercises($u.getId()));
+end
+

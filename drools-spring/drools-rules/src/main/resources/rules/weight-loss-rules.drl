@@ -38,6 +38,6 @@ rule "Add all exercises - Cardio"
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteCardioExercises(userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, null, ExerciseType.CARDIO); };
+    modify($u) { addExercises($filteredExercises, $allExercises, null, ExerciseType.CARDIO, 2); };
     insert (new AddedFavoriteCardioExercises($u.getId()));
 end

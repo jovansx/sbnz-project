@@ -39,7 +39,7 @@ rule "Add all exercises - Back"
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.BACK, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.BACK, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.BACK, $u.getId()));
 end
 
@@ -72,7 +72,7 @@ rule "Add all exercises - Arms"
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.ARMS, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.ARMS, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.ARMS, $u.getId()));
 end
 
@@ -105,7 +105,7 @@ rule "Add all exercises - Legs"
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.LEGS, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.LEGS, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.LEGS, $u.getId()));
 end
 
@@ -138,7 +138,7 @@ rule "Add all exercises - Core"
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CORE, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CORE, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CORE, $u.getId()));
 end
 
@@ -171,6 +171,6 @@ rule "Add all exercises - Chest"
 		 $allExercises: AllExercisesDTO()
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
     then
-    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CHEST, ExerciseType.STRENGTH); };
+    modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CHEST, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CHEST, $u.getId()));
 end

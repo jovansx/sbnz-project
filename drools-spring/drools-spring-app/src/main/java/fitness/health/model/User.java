@@ -80,13 +80,12 @@ public class User {
 		this.injuries = injuries;
 	}
 	
-	public void addExercises(List<Exercise> filtered, AllExercisesDTO allExercises, BodyPart part, ExerciseType type) {
+	public void addExercises(List<Exercise> filtered, AllExercisesDTO allExercises, BodyPart part, ExerciseType type, double numberToHave) {
 		getExercises().addAll(filtered);
-		int howManyToAdd = getNumberOfTrainingPerWeek() - filtered.size();
+		int howManyToAdd = (int) numberToHave - filtered.size();
 		
 		List<Exercise> exercisesCandidates;
 		if(type == ExerciseType.CARDIO) {
-			howManyToAdd = 2 - filtered.size();
 			exercisesCandidates = allExercises.getExercises().stream().filter(
 					e -> !filtered.contains(e) && e.getType() == type)
 					.collect(Collectors.toList());
