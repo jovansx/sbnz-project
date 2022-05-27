@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+import fitness.health.dtos.RequestDTO;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.ExerciseType;
@@ -62,23 +62,18 @@ public class User {
 	public User() {
 		super();
 	}
-
-	public User(double bodyWeight, double height, int ageInYears, int numberOfTrainingPerWeek, Gender gender,
-			List<Exercise> favoriteExercises, DietType dietType, List<RiskIngredients> riskIngredients,
-			UserGoal userGoal, List<Injury> injuries) {
-		super();
-		this.bodyWeight = bodyWeight;
-		this.height = height;
-		this.ageInYears = ageInYears;
-		this.numberOfTrainingPerWeek = numberOfTrainingPerWeek;
-		this.gender = gender;
-		this.favoriteExercises = favoriteExercises;
-		this.dietType = dietType;
-		this.riskIngredients = riskIngredients;
-		this.userGoal = userGoal;
-		this.injuries = injuries;
-	}
 	
+	public User(RequestDTO requestDTO) {
+		bodyWeight = requestDTO.getWeight();
+		height = requestDTO.getHeight();
+		ageInYears = requestDTO.getAge();
+		numberOfTrainingPerWeek = requestDTO.getNumberOfTrainingPerWeek();
+		gender = requestDTO.getGender();
+		dietType = requestDTO.getDietType();
+		userGoal = requestDTO.getGoal();
+		
+	}
+
 	public void addExercises(List<Exercise> filtered, List<Exercise> allExercises, BodyPart part, ExerciseType type, double numberToHave) {
 		getExercises().addAll(filtered);
 		int howManyToAdd = (int) numberToHave - filtered.size();
