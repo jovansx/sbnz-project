@@ -18,9 +18,11 @@ import javax.persistence.Table;
 import fitness.health.dtos.RequestDTO;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
+import fitness.health.model.enums.ExerciseIntensity;
 import fitness.health.model.enums.ExerciseType;
 import fitness.health.model.enums.Gender;
 import fitness.health.model.enums.ProgressStrategy;
+import fitness.health.model.enums.RecoveryStrategy;
 import fitness.health.model.enums.RiskIngredients;
 import fitness.health.model.enums.UserGoal;
 import fitness.health.model.enums.UserState;
@@ -46,6 +48,8 @@ public class User {
 	private UserGoal userGoal;
 	@ManyToMany
 	private List<Injury> injuries;
+	@ManyToMany
+	private List<Injury> startingInjuries = new ArrayList<Injury>();
 //	--- Fields which drools will calculate
 	private int genderCoefficient;
 	private double strategyCoefficient;
@@ -73,10 +77,30 @@ public class User {
 		userGoal = requestDTO.getGoal();
 		
 	}
+	
+	public List<Exercise> updateExercisesByInjuries(List<Exercise> allExercises) {
+		Injury firstInjury = injuries.get(0);
+		if(firstInjury.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) {
+			injuries.remove(firstInjury);
+			return new ArrayList<Exercise>();
+		}
+		allExercises = allExercises.stream().filter(e -> e.getActiveBodyParts().contains(firstInjury.getBodyPart())).collect(Collectors.toList());
+		injuries.remove(firstInjury);
+		return allExercises;
+	}
 
 	public void addExercises(List<Exercise> filtered, List<Exercise> allExercises, BodyPart part, ExerciseType type, double numberToHave) {
-		getExercises().addAll(filtered);
-		int howManyToAdd = (int) numberToHave - filtered.size();
+		int added = 0;
+		for (Exercise exercise : filtered) {
+			for (Exercise exercise2 : allExercises) {
+				if(exercise.getName().equals(exercise2.getName())) {
+					getExercises().add(exercise);
+					added += 1;
+				}
+			}
+		}
+		
+		int howManyToAdd = (int) numberToHave - added;
 		
 		List<Exercise> exercisesCandidates;
 		if(type == ExerciseType.CARDIO) {
@@ -89,7 +113,11 @@ public class User {
 					.collect(Collectors.toList());
 		}
 		
-		getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
+		if(exercisesCandidates.size() != 0)
+			getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
+		else 
+			getExercises().addAll(allExercises.subList(0, howManyToAdd));
+		
 	}
 	
 	public void updateExercises(List<Exercise> allExercises) {
@@ -114,6 +142,14 @@ public class User {
 			exercises.addAll(filteredList.subList(0, initialSize - currentSize));
 		}
 		
+		for (Injury i : startingInjuries) {
+			if(i.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) {
+				exercises.stream()
+					.filter(e -> e.getActiveBodyParts().contains(i.getBodyPart()))
+					.forEach(e -> e.setIntesity(ExerciseIntensity.REDUCED_DUE_TO_REHABILITATION));
+			}
+		}
+		
 	}
 	
 	public void updateFoodstufListWithRiskyIngridients() {
@@ -125,7 +161,15 @@ public class User {
 	public void updateFoodstufList(List<Foodstuff> allFood) {
 		this.foodstufList = allFood.stream().filter(f -> f.getBelongsToDiets().contains(dietType)).collect(Collectors.toList());
 	}
-		
+	
+	public List<Injury> getStartingInjuries() {
+		return startingInjuries;
+	}
+
+	public void setStartingInjuries(List<Injury> startingInjuries) {
+		this.startingInjuries = startingInjuries;
+	}
+
 	public Long getId() {
 		return id;
 	}

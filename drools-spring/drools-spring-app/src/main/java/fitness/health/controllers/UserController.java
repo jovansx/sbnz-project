@@ -18,9 +18,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	TODO Vidi za povrede sta cete
-//	TODO Dodaj jos entiteta u bazu
-	
 	@PostMapping
 	public UserDTO getPlan(@RequestBody RequestDTO requestDTO) {
 		User u = new User(requestDTO);

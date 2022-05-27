@@ -1,6 +1,7 @@
 package rules;
 
 import fitness.health.events.AddedFavoriteExercisesForBodyPart;
+import fitness.health.events.ExercisesWhichUseInjuredPartsFiltered;
 import fitness.health.model.User;
 import fitness.health.model.Exercise;
 import fitness.health.model.enums.ProgressStrategy;
@@ -19,6 +20,7 @@ rule "Add some exercises - Back"
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
+         ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
 	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.BACK, $u.getId()));
@@ -36,6 +38,7 @@ rule "Add all exercises - Back"
 		 )
 		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
+		 ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.BACK, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.BACK, $u.getId()));
@@ -52,6 +55,7 @@ rule "Add some exercises - Arms"
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.ARMS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
+         ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
 	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.ARMS, $u.getId()));
@@ -69,6 +73,7 @@ rule "Add all exercises - Arms"
 		 )
 		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
+		 ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.ARMS, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.ARMS, $u.getId()));
@@ -85,6 +90,7 @@ rule "Add some exercises - Legs"
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.LEGS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
+         ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
 	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.LEGS, $u.getId()));
@@ -102,6 +108,7 @@ rule "Add all exercises - Legs"
 		 )
 		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
+		 ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.LEGS, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.LEGS, $u.getId()));
@@ -118,6 +125,7 @@ rule "Add some exercises - Core"
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CORE memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
+         ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
 	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CORE, $u.getId()));
@@ -135,6 +143,7 @@ rule "Add all exercises - Core"
 		 )
 		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
+		 ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CORE, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CORE, $u.getId()));
@@ -151,6 +160,7 @@ rule "Add some exercises - Chest"
             $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CHEST memberOf activeBodyParts) from $favoriteExercises, collectList($e)
          )
          not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
+         ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
 	modify($u) { getExercises().addAll($filteredExercises.subList(0, $btn));}
 	insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CHEST, $u.getId()));
@@ -168,6 +178,7 @@ rule "Add all exercises - Chest"
 		 )
 		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
+		 ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CHEST, ExerciseType.STRENGTH, $btn); };
     insert (new AddedFavoriteExercisesForBodyPart(BodyPart.CHEST, $u.getId()));

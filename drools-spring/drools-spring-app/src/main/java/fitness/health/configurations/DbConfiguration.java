@@ -29,7 +29,7 @@ public class DbConfiguration {
     		InjuryRepository injuryRepository, UserRepository userRepository) {
         return (args) -> {
         	Exercise e1 = new Exercise("Trcanje", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.LEGS, BodyPart.CORE));
-        	Exercise e2 = new Exercise("Veslanje", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.BACK, BodyPart.ARMS, BodyPart.LEGS));
+        	Exercise e2 = new Exercise("Veslanje", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.BACK, BodyPart.ARMS));
         	Exercise e3 = new Exercise("Plivanje", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.LEGS, BodyPart.CORE, BodyPart.ARMS, BodyPart.BACK));
         	Exercise e4 = new Exercise("Preskakanje vijace", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.LEGS, BodyPart.CORE));
         	Exercise e5 = new Exercise("Benc press", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.ARMS, BodyPart.CHEST));
@@ -43,8 +43,27 @@ public class DbConfiguration {
         	Exercise e13 = new Exercise("Pregib s bucicama", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.ARMS));
         	Exercise e14 = new Exercise("Iskorak", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.LEGS, BodyPart.CORE));
         	Exercise e15 = new Exercise("Trbusnjaci", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CORE));
+        	Exercise e16 = new Exercise("Voznja bicikla", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.LEGS));
+        	Exercise e17 = new Exercise("Skakanje", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.LEGS));
+        	Exercise e18 = new Exercise("Penjanje uz stepenice", ExerciseIntensity.NORMAL, ExerciseType.CARDIO, List.of(BodyPart.LEGS));	
+        	Exercise e19 = new Exercise("Laternalno podizanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.ARMS));
+        	Exercise e20 = new Exercise("Triceps sklekovi", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.ARMS));
+        	Exercise e21 = new Exercise("Veslanje s bucicama", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.BACK, BodyPart.ARMS));     	
+        	Exercise e22 = new Exercise("Sklopke", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CORE));
+        	Exercise e23 = new Exercise("Izdrzaj", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CORE));
+        	Exercise e24 = new Exercise("Supermen povlacenje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CORE));        	
+        	Exercise e25 = new Exercise("Obrnuto veslanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.BACK));
+        	Exercise e26 = new Exercise("Lat veslanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.BACK));
+        	Exercise e27 = new Exercise("Jednorucno veslanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.BACK));       	
+        	Exercise e28 = new Exercise("Propadanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CHEST));
+        	Exercise e29 = new Exercise("Letenje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CHEST));
+        	Exercise e30 = new Exercise("Obrnuti benc press", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.CHEST));       	
+        	Exercise e31 = new Exercise("Jednonozno mrtvo dizanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.LEGS));
+        	Exercise e32 = new Exercise("Skejtbord skakanje", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.LEGS));
+        	Exercise e33 = new Exercise("Prednji cucanj", ExerciseIntensity.NORMAL, ExerciseType.STRENGTH, List.of(BodyPart.LEGS));
 
-        	exerciseRepository.saveAll(List.of(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15));
+        	exerciseRepository.saveAll(List.of(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, 
+        			e16, e17, e18, e19, e20, e21, e22, e23, e24, e25, e26, e27, e28, e29, e30, e31, e32, e33));
         	
         	Injury i1 = new Injury(BodyPart.ARMS, RecoveryStrategy.AVOIDANCE);
         	Injury i2 = new Injury(BodyPart.ARMS, RecoveryStrategy.REHABILITATION);
@@ -97,8 +116,6 @@ public class DbConfiguration {
 			foodstuffRepository.saveAll(List.of(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10,
 										f11, f12, f13, f14, f15, f16, f17, f18, f19, f20,
 										f21, f22, f23, f24, f25, f26, f27, f28, f29, f30, f31, f32, f33, f34));
-
-
         };
     }
 }

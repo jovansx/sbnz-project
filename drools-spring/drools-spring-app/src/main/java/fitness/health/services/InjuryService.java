@@ -1,6 +1,8 @@
 package fitness.health.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,14 @@ public class InjuryService {
 			injuries.add(optional.get());
 		}
 		u.setInjuries(injuries);
+		u.getStartingInjuries().addAll(u.getInjuries());
+		
+		Collections.sort(u.getInjuries(), new Comparator<Injury>() {
+	        @Override
+	        public int compare(Injury h1, Injury h2) {
+	            return h1.getRecoveryStrategy().compareTo(h2.getRecoveryStrategy());
+	        }
+	    });
 	}
 	
 }
