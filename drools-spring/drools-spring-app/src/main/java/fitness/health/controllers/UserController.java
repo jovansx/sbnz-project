@@ -20,8 +20,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	TODO Ne treba imati sve one flagove u useru vec mozemo samo insertovati i na kraju samo upisati kalorije i vezbe i hranu 9/63
-//	TODO Dodaj opciju da moze razne merne jedinice
 //	TODO Vidi za povrede sta cete
 //	TODO Dodaj jos entiteta u bazu
 	

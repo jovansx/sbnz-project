@@ -48,18 +48,17 @@ public class User {
 	private List<Injury> injuries;
 //	--- Fields which drools will calculate
 	private int genderCoefficient;
-	private double calories;
-	@Enumerated(EnumType.STRING)
-	private ProgressStrategy progressStrategy;
 	private double strategyCoefficient;
 	@Enumerated(EnumType.STRING)
+	private ProgressStrategy progressStrategy;
+	@Enumerated(EnumType.STRING)
 	private UserState currentState;
-	private boolean exercisesAreFiltered;
 	@ManyToMany
 	private List<Exercise> exercises = new ArrayList<Exercise>();
 	@ManyToMany
 	private List<Foodstuff> foodstufList = new ArrayList<Foodstuff>();
-	
+	private double calories;
+
 	public User() {
 		super();
 	}
@@ -237,14 +236,6 @@ public class User {
 
 	public void setCurrentState(UserState currentState) {
 		this.currentState = currentState;
-	}
-
-	public boolean isExercisesAreFiltered() {
-		return exercisesAreFiltered;
-	}
-
-	public void setExercisesAreFiltered(boolean exercisesAreFiltered) {
-		this.exercisesAreFiltered = exercisesAreFiltered;
 	}
 
 	public List<Exercise> getExercises() {
