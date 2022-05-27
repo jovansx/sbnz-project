@@ -9,8 +9,6 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fitness.health.dtos.AllExercisesDTO;
-import fitness.health.dtos.AllFoodDTO;
 import fitness.health.model.Exercise;
 import fitness.health.model.Foodstuff;
 import fitness.health.model.User;
@@ -39,15 +37,15 @@ public class UserService {
 		
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(u);
-		kieSession.insert(new AllExercisesDTO(exerciseService.getAllExercises()));
-		kieSession.insert(new AllFoodDTO(foodService.getAllFood()));
+		exerciseService.getAllExercises().stream().forEach(e -> kieSession.insert(e));
+		foodService.getAllFood().stream().forEach(e -> kieSession.insert(e));
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return u;
 	}
 	
 	public void setUserRiskIngridient(User u, String riskIngridientsNames) {
-		List<RiskIngredients> riskIngredients = new ArrayList();
+		List<RiskIngredients> riskIngredients = new ArrayList<RiskIngredients>();
 		for (String ingridientName : riskIngridientsNames.split(",")) {
 			try {
 				RiskIngredients i = RiskIngredients.valueOf(ingridientName);

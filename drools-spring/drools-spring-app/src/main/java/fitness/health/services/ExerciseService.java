@@ -8,9 +8,6 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import fitness.health.dtos.AllExercisesDTO;
-import fitness.health.dtos.AllFoodDTO;
 import fitness.health.model.Exercise;
 import fitness.health.model.Foodstuff;
 import fitness.health.model.User;

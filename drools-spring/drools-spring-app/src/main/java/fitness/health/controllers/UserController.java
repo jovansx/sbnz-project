@@ -22,12 +22,8 @@ public class UserController {
 
 //	TODO Ne treba imati sve one flagove u useru vec mozemo samo insertovati i na kraju samo upisati kalorije i vezbe i hranu 9/63
 //	TODO Dodaj opciju da moze razne merne jedinice
-//	TODO Popravi formulu za kalorije
 //	TODO Vidi za povrede sta cete
-//	TODO Vidi da zamenis one dtovoe s obicnom listom i onda mozes koristiti collect
-//	TODO Razmisli da li da bude post ili get
 //	TODO Dodaj jos entiteta u bazu
-//	TODO Baguje nesto broj kalorija
 	
 	@GetMapping
 	public UserDTO getPlan(@RequestParam("weight") double weight, @RequestParam("height") double height,

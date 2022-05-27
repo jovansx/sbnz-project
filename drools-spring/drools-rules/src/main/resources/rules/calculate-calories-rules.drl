@@ -9,7 +9,7 @@ rule "Calculate User Calories - Calorie number"
     when
         $u: User( strategyCoefficient != 0 && genderCoefficient != 0 )
     then
-        $u.setCalories((10 * $u.getBodyWeight() + 6.25 * $u.getHeight() - 5 * $u.getAgeInYears()
+        $u.setCalories((10 * $u.getBodyWeight() + 6.25 * $u.getHeight() * 100 - 5 * $u.getAgeInYears()
          - $u.getGenderCoefficient()) * $u.getStrategyCoefficient() + ($u.getNumberOfTrainingPerWeek() * 150 / 7));
         update($u);
 end

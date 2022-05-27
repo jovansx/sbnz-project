@@ -3,13 +3,11 @@ package rules;
 import fitness.health.events.AddedFavoriteExercisesForBodyPart;
 import fitness.health.events.AddedFavoriteCardioExercises;
 import fitness.health.model.User;
-import fitness.health.dtos.AllExercisesDTO;
 import fitness.health.model.Exercise;
 import fitness.health.model.enums.ProgressStrategy;
 import fitness.health.model.enums.ExerciseType;
 import fitness.health.model.enums.BodyPart;
 import java.util.List;
-import java.util.stream.Collectors;
 
 rule "Add some exercises - Cardio"
     when
@@ -35,7 +33,7 @@ rule "Add all exercises - Cardio"
 		 $filteredExercises: List(size < 2 ) from accumulate(
 		    $e: Exercise(type == ExerciseType.CARDIO) from $favoriteExercises, collectList($e)
 		 )
-		 $allExercises: AllExercisesDTO()
+		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteCardioExercises(userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, null, ExerciseType.CARDIO, 2); };

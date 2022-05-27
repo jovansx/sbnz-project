@@ -2,13 +2,11 @@ package rules;
 
 import fitness.health.events.AddedFavoriteExercisesForBodyPart;
 import fitness.health.model.User;
-import fitness.health.dtos.AllExercisesDTO;
 import fitness.health.model.Exercise;
 import fitness.health.model.enums.ProgressStrategy;
 import fitness.health.model.enums.ExerciseType;
 import fitness.health.model.enums.BodyPart;
 import java.util.List;
-import java.util.stream.Collectors;
 
 rule "Add some exercises - Back"
     when
@@ -36,7 +34,7 @@ rule "Add all exercises - Back"
 		 $filteredExercises: List(size < $btn ) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.BACK memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
-		 $allExercises: AllExercisesDTO()
+		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.BACK, ExerciseType.STRENGTH, $btn); };
@@ -69,7 +67,7 @@ rule "Add all exercises - Arms"
 		 $filteredExercises: List(size < $btn ) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.ARMS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
-		 $allExercises: AllExercisesDTO()
+		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.ARMS, ExerciseType.STRENGTH, $btn); };
@@ -102,7 +100,7 @@ rule "Add all exercises - Legs"
 		 $filteredExercises: List(size < $btn ) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.LEGS memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
-		 $allExercises: AllExercisesDTO()
+		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.LEGS, ExerciseType.STRENGTH, $btn); };
@@ -135,7 +133,7 @@ rule "Add all exercises - Core"
 		 $filteredExercises: List(size < $btn ) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CORE memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
-		 $allExercises: AllExercisesDTO()
+		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CORE, ExerciseType.STRENGTH, $btn); };
@@ -168,7 +166,7 @@ rule "Add all exercises - Chest"
 		 $filteredExercises: List(size < $btn ) from accumulate(
 		    $e: Exercise(type == ExerciseType.STRENGTH, BodyPart.CHEST memberOf activeBodyParts) from $favoriteExercises, collectList($e)
 		 )
-		 $allExercises: AllExercisesDTO()
+		 $allExercises: List() from collect(Exercise())
 		 not AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
     then
     modify($u) { addExercises($filteredExercises, $allExercises, BodyPart.CHEST, ExerciseType.STRENGTH, $btn); };

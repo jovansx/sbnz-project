@@ -2,14 +2,14 @@ package rules;
 
 import fitness.health.model.User;
 import fitness.health.model.enums.DietType;
-import fitness.health.dtos.AllFoodDTO;
+import fitness.health.model.Foodstuff;
 import fitness.health.events.DietFiltered;
 
 
 rule "Classify Diet - Vegan"
     when
         $u: User( dietType == DietType.VEGAN )
-        $allFood: AllFoodDTO()
+        $allFood: List() from collect(Foodstuff())
         not DietFiltered(userId == $u.id)
     then
         modify($u) { updateFoodstufList($allFood); };
@@ -20,7 +20,7 @@ end
 rule "Classify Diet - Vegeterian"
     when
         $u: User( dietType == DietType.VEGETARIAN )
-        $allFood: AllFoodDTO()
+        $allFood: List() from collect(Foodstuff())
         not DietFiltered(userId == $u.id)
     then
         modify($u) { updateFoodstufList($allFood); };
@@ -30,7 +30,7 @@ end
 rule "Classify Diet - General"
     when
         $u: User( dietType == DietType.GENERAL )
-        $allFood: AllFoodDTO()
+        $allFood: List() from collect(Foodstuff())
         not DietFiltered(userId == $u.id)
     then
         modify($u) { updateFoodstufList($allFood); };

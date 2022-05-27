@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.ElementCollection;
@@ -17,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import fitness.health.dtos.AllExercisesDTO;
-import fitness.health.dtos.AllFoodDTO;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
 import fitness.health.model.enums.ExerciseType;
@@ -83,17 +80,17 @@ public class User {
 		this.injuries = injuries;
 	}
 	
-	public void addExercises(List<Exercise> filtered, AllExercisesDTO allExercises, BodyPart part, ExerciseType type, double numberToHave) {
+	public void addExercises(List<Exercise> filtered, List<Exercise> allExercises, BodyPart part, ExerciseType type, double numberToHave) {
 		getExercises().addAll(filtered);
 		int howManyToAdd = (int) numberToHave - filtered.size();
 		
 		List<Exercise> exercisesCandidates;
 		if(type == ExerciseType.CARDIO) {
-			exercisesCandidates = allExercises.getExercises().stream().filter(
+			exercisesCandidates = allExercises.stream().filter(
 					e -> !filtered.contains(e) && e.getType() == type)
 					.collect(Collectors.toList());
 		} else {
-			exercisesCandidates = allExercises.getExercises().stream().filter(
+			exercisesCandidates = allExercises.stream().filter(
 					e -> !filtered.contains(e) && e.getActiveBodyParts().contains(part) && e.getType() == type)
 					.collect(Collectors.toList());
 		}
@@ -101,7 +98,7 @@ public class User {
 		getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
 	}
 	
-	public void updateExercises(AllExercisesDTO allExercises) {
+	public void updateExercises(List<Exercise> allExercises) {
 		int initialSize = exercises.size();
 		Set<Exercise> set = new HashSet<>(exercises);
 		exercises.clear();
@@ -112,13 +109,13 @@ public class User {
 		if(firstExercise.getType() == ExerciseType.CARDIO && initialSize <= 2) {
 //			Loss
 			if(initialSize > currentSize) {
-				List<Exercise> filteredList = allExercises.getExercises().stream().filter(
+				List<Exercise> filteredList = allExercises.stream().filter(
 						e -> !exercises.contains(e) && e.getType() == ExerciseType.CARDIO).collect(Collectors.toList());
 				exercises.add(filteredList.get(0));
 			}
 		} else {
 //			Maintain and gain
-			List<Exercise> filteredList = allExercises.getExercises().stream().filter(
+			List<Exercise> filteredList = allExercises.stream().filter(
 					e -> !exercises.contains(e) && e.getType() == ExerciseType.STRENGTH).collect(Collectors.toList());
 			exercises.addAll(filteredList.subList(0, initialSize - currentSize));
 		}
@@ -131,8 +128,8 @@ public class User {
 		riskIngredients.remove(riskIngredient);
 	}
 	
-	public void updateFoodstufList(AllFoodDTO allFood) {
-		this.foodstufList = allFood.getFoodList().stream().filter(f -> f.getBelongsToDiets().contains(dietType)).collect(Collectors.toList());
+	public void updateFoodstufList(List<Foodstuff> allFood) {
+		this.foodstufList = allFood.stream().filter(f -> f.getBelongsToDiets().contains(dietType)).collect(Collectors.toList());
 	}
 		
 	public Long getId() {
