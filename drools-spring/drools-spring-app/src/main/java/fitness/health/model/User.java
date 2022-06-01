@@ -113,10 +113,14 @@ public class User {
 					.collect(Collectors.toList());
 		}
 		
-		if(exercisesCandidates.size() != 0)
-			getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
-		else 
-			getExercises().addAll(allExercises.subList(0, howManyToAdd));
+		try {
+			if(exercisesCandidates.size() != 0)
+				getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
+			else 
+				getExercises().addAll(allExercises.subList(0, howManyToAdd));
+		} catch (Exception ignored) {
+			getExercises().addAll(allExercises);
+		}
 		
 	}
 	
@@ -139,7 +143,11 @@ public class User {
 //			Maintain and gain
 			List<Exercise> filteredList = allExercises.stream().filter(
 					e -> !exercises.contains(e) && e.getType() == ExerciseType.STRENGTH).collect(Collectors.toList());
-			exercises.addAll(filteredList.subList(0, initialSize - currentSize));
+			try {
+				exercises.addAll(filteredList.subList(0, initialSize - currentSize));
+			} catch (Exception ignored) {
+				exercises.addAll(filteredList);
+			}
 		}
 		
 		for (Injury i : startingInjuries) {
