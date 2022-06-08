@@ -48,9 +48,10 @@ public class User {
 	private UserGoal userGoal;
 	@ManyToMany
 	private List<Injury> injuries;
+
+	//	--- Fields which drools will calculate
 	@ManyToMany
 	private List<Injury> startingInjuries = new ArrayList<Injury>();
-//	--- Fields which drools will calculate
 	private int genderCoefficient;
 	private double strategyCoefficient;
 	@Enumerated(EnumType.STRING)

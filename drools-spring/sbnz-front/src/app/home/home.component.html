@@ -1,0 +1,163 @@
+<div>
+    <form   class="form-container" 
+            [formGroup]="forma" 
+            fxLayout="row" 
+            fxLayoutAlign="center center">
+            <div fxFlex fxLayout="column" 
+            fxLayoutAlign="center center">
+        <!-- Weight -->
+        <mat-form-field appearance="fill">
+            <mat-label>Weight (Kg)</mat-label>
+            <input matInput formControlName="weight" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("weight")
+            }}</mat-error>
+        </mat-form-field>
+        <!-- Height -->
+        <mat-form-field appearance="fill">
+            <mat-label>Height (m)</mat-label>
+            <input matInput formControlName="height" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("height")
+            }}</mat-error>
+        </mat-form-field>
+        <!-- Age -->
+        <mat-form-field appearance="fill">
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="age" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("age")
+            }}</mat-error>
+        </mat-form-field>
+        <!-- Number of trainings per week -->
+        <mat-form-field appearance="fill">
+            <mat-label>Number of trainings per week</mat-label>
+            <input matInput formControlName="numberOfTrainingPerWeek" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("numberOfTrainingPerWeek")
+            }}</mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="MALE">Male</mat-option>
+              <mat-option value="FEMALE">Female</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+            <mat-label>Diet type</mat-label>
+            <mat-select formControlName="dietType">
+              <mat-option value="GENERAL">General</mat-option>
+              <mat-option value="VEGAN">Vegan</mat-option>
+              <mat-option value="VEGETARIAN">Vegetarian</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+            <mat-label>Goal</mat-label>
+            <mat-select formControlName="userGoal">
+              <mat-option value="BODY_MASS_INCREASE">Increase weight</mat-option>
+              <mat-option value="BODY_MASS_LOSS">Lose weight</mat-option>
+              <mat-option value="BODY_MASS_MAINTENANCE">Maintain weight</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex fxLayout="column" 
+    fxLayoutAlign="center start">
+        <h4>Select favorite exercises:</h4>
+        <p><input formControlName="trcanje" type="checkbox"/> Trcanje</p>
+        <p><input formControlName="veslanje" type="checkbox"/> Veslanje</p>
+        <p><input formControlName="plivanje" type="checkbox"/>Plivanje</p>
+        <p><input formControlName="preskakanjeVijace" type="checkbox"/>Preskakanje vijace</p>
+        <p><input formControlName="bencPress" type="checkbox"/>Benc press</p>
+        <p><input formControlName="mrtvoDizanje" type="checkbox"/>Mrtvo dizanje</p>
+        <p><input formControlName="cucanj" type="checkbox"/>Cucanj</p>
+        <p><input formControlName="zgibovi" type="checkbox"/>Zgibovi</p>
+        <p><input formControlName="sklekovi" type="checkbox"/>Sklekovi</p>
+        <p><input formControlName="militarryPress" type="checkbox"/>Militarry press</p>
+        <p><input formControlName="veslanjeUPretklonu" type="checkbox"/>Veslanje u pretklonu</p>
+        <p><input formControlName="tricepsEkstenzija" type="checkbox"/>Triceps ekstenzija</p>
+        <p><input formControlName="pregibSBucicama" type="checkbox"/>Pregib s bucicama</p>
+        <p><input formControlName="iskorak" type="checkbox"/>Iskorak</p>
+        <p><input formControlName="trbusnjaci" type="checkbox"/>Trbusnjaci</p>
+        <p><input formControlName="voznjaBicikla" type="checkbox"/>Voznja bicikla</p>
+    </div>
+        <div fxFlex fxLayout="column" 
+    fxLayoutAlign="center start">
+        <p><input formControlName="skakanje" type="checkbox"/>Skakanje</p>
+        <p><input formControlName="penjanjeUzStepenice" type="checkbox"/>Penjanje uz stepenice</p>
+        <p><input formControlName="lateralnoPodizanje" type="checkbox"/>Laternalno podizanje</p>
+        <p><input formControlName="tricepsSklekovi" type="checkbox"/>Triceps sklekovi</p>
+        <p><input formControlName="veslanjeSBucicama" type="checkbox"/>Veslanje s bucicama</p>
+        <p><input formControlName="sklopke" type="checkbox"/>Sklopke</p>
+        <p><input formControlName="izdrzaj" type="checkbox"/>Izdrzaj</p>
+        <p><input formControlName="supermenPovlacenje" type="checkbox"/>Supermen povlacenje</p>
+        <p><input formControlName="obrnutoVeslanje" type="checkbox"/>Obrnuto veslanje</p>
+        <p><input formControlName="latVeslanje" type="checkbox"/>Lat veslanje</p>
+        <p><input formControlName="jednorucnoVeslanje" type="checkbox"/>Jednorucno veslanje</p>
+        <p><input formControlName="propadanje" type="checkbox"/>Propadanje</p>
+        <p><input formControlName="letenje" type="checkbox"/>Letenje</p>
+        <p><input formControlName="obrnutiBencPress" type="checkbox"/>Obrnuti benc press</p>
+        <p><input formControlName="jednonoznoMrtvoDizanje" type="checkbox"/>Jednonozno mrtvo dizanje</p>
+        <p><input formControlName="skejtbordSkakanje" type="checkbox"/>Skejtbord skakanje</p>
+        <p><input formControlName="prednjiCucanj" type="checkbox"/>Prednji cucanj</p>
+    </div>
+    <div fxFlex fxLayout="column" 
+    fxLayoutAlign="center center">
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Arm injury</mat-label>
+        <mat-select formControlName="armInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Back injury</mat-label>
+        <mat-select formControlName="backInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Leg injury</mat-label>
+        <mat-select formControlName="legInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Core injury</mat-label>
+        <mat-select formControlName="coreInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Chest injury</mat-label>
+        <mat-select formControlName="chestInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <h4>Select risk ingredients:</h4>
+    <p>Gluten: <input formControlName="gluten" type="checkbox"/></p>
+    <p>Lactose: <input formControlName="lactose" type="checkbox"/></p>
+    <p>Peanuts: <input formControlName="peanuts" type="checkbox"/></p>
+    </div>
+    </form>
+    <div class="plan-btn-container" fxLayout="row" 
+    fxLayoutAlign="end center">
+        <button
+        class="plan-btn"
+        mat-flat-button
+        color="primary"
+        (click)="getPlan()"
+      >
+        Get plan
+      </button>
+    </div>
+</div>
