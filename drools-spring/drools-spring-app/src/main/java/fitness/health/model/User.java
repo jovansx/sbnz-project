@@ -79,15 +79,14 @@ public class User {
 		
 	}
 	
-	public List<Exercise> updateExercisesByInjuries(List<Exercise> allExercises) {
-		Injury firstInjury = injuries.get(0);
-		if(firstInjury.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) {
-			injuries.remove(0);
-			return new ArrayList<Exercise>();
+	public Set<Exercise> updateExercisesByInjuries(List<Exercise> allExercises) {
+		Set<Exercise> deleteExercises = new HashSet<>();
+		for (Injury inj: injuries) {
+			if(inj.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) continue;
+			deleteExercises.addAll(allExercises.stream().filter(e -> e.getActiveBodyParts().contains(inj.getBodyPart())).collect(Collectors.toList()));
 		}
-		allExercises = allExercises.stream().filter(e -> e.getActiveBodyParts().contains(firstInjury.getBodyPart())).collect(Collectors.toList());
-		injuries.remove(firstInjury);
-		return allExercises;
+		injuries.clear();
+		return deleteExercises;
 	}
 
 	public void addExercises(List<Exercise> filtered, List<Exercise> allExercises, BodyPart part, ExerciseType type, double numberToHave) {
