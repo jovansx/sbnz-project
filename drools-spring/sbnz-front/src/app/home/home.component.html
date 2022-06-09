@@ -1,12 +1,12 @@
 <div>
     <form   class="form-container" 
             [formGroup]="forma" 
-            fxLayout="row" 
+            fxLayout="column" 
             fxLayoutAlign="center center">
-            <div fxFlex fxLayout="column" 
+            <div class="form-part" fxFlex fxLayout="column" 
             fxLayoutAlign="center center">
         <!-- Weight -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" style="margin-top: 30px">
             <mat-label>Weight (Kg)</mat-label>
             <input matInput formControlName="weight" required type="number"/>
             <mat-error *ngIf="forma.invalid">{{
@@ -61,48 +61,46 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div fxFlex fxLayout="column" 
+    <div class="form-part" fxFlex fxLayout="column" 
     fxLayoutAlign="center start">
-        <h4>Select favorite exercises:</h4>
-        <p><input formControlName="trcanje" type="checkbox"/> Trcanje</p>
-        <p><input formControlName="veslanje" type="checkbox"/> Veslanje</p>
-        <p><input formControlName="plivanje" type="checkbox"/>Plivanje</p>
-        <p><input formControlName="preskakanjeVijace" type="checkbox"/>Preskakanje vijace</p>
-        <p><input formControlName="bencPress" type="checkbox"/>Benc press</p>
-        <p><input formControlName="mrtvoDizanje" type="checkbox"/>Mrtvo dizanje</p>
-        <p><input formControlName="cucanj" type="checkbox"/>Cucanj</p>
-        <p><input formControlName="zgibovi" type="checkbox"/>Zgibovi</p>
-        <p><input formControlName="sklekovi" type="checkbox"/>Sklekovi</p>
-        <p><input formControlName="militarryPress" type="checkbox"/>Militarry press</p>
-        <p><input formControlName="veslanjeUPretklonu" type="checkbox"/>Veslanje u pretklonu</p>
-        <p><input formControlName="tricepsEkstenzija" type="checkbox"/>Triceps ekstenzija</p>
-        <p><input formControlName="pregibSBucicama" type="checkbox"/>Pregib s bucicama</p>
-        <p><input formControlName="iskorak" type="checkbox"/>Iskorak</p>
-        <p><input formControlName="trbusnjaci" type="checkbox"/>Trbusnjaci</p>
-        <p><input formControlName="voznjaBicikla" type="checkbox"/>Voznja bicikla</p>
+        <h3>Select favorite exercises</h3>
+        <p class="exercise-card"><input formControlName="trcanje" type="checkbox"/> Trcanje <img src="../../assets/exercises/running.jpg"/></p>
+        <p class="exercise-card"><input formControlName="veslanje" type="checkbox"/> Veslanje <img src="../../assets/exercises/rowing.png"/></p>
+        <p class="exercise-card"><input formControlName="plivanje" type="checkbox"/>Plivanje <img src="../../assets/exercises/swimming.png"/></p>
+        <p class="exercise-card"><input formControlName="preskakanjeVijace" type="checkbox"/>Preskakanje vijace <img src="../../assets/exercises/skipping.jpg"/></p>
+        <p class="exercise-card"><input formControlName="bencPress" type="checkbox"/>Benc press <img src="../../assets/exercises/bench.png"/></p>
+        <p class="exercise-card"><input formControlName="mrtvoDizanje" type="checkbox"/>Mrtvo dizanje <img src="../../assets/exercises/deadlift.jpg"/></p>
+        <p class="exercise-card"><input formControlName="cucanj" type="checkbox"/>Cucanj <img src="../../assets/exercises/squat.png"/></p>
+        <p class="exercise-card"><input formControlName="zgibovi" type="checkbox"/>Zgibovi <img src="../../assets/exercises/pullup.jpg"/></p>
+        <p class="exercise-card"><input formControlName="sklekovi" type="checkbox"/>Sklekovi <img src="../../assets/exercises/pushup.jpg"/></p>
+        <p class="exercise-card"><input formControlName="militarryPress" type="checkbox"/>Militarry press <img src="../../assets/exercises/militarrypress.png"/></p>
+        <p class="exercise-card"><input formControlName="veslanjeUPretklonu" type="checkbox"/>Veslanje u pretklonu <img src="../../assets/exercises/rowing.png"/></p>
+        <p class="exercise-card"><input formControlName="tricepsEkstenzija" type="checkbox"/>Triceps ekstenzija <img src="../../assets/exercises/tricepsextension.jpg"/></p>
+        <p class="exercise-card"><input formControlName="pregibSBucicama" type="checkbox"/>Pregib s bucicama <img src="../../assets/exercises/biceps.jpg"/></p>
+        <p class="exercise-card"><input formControlName="iskorak" type="checkbox"/>Iskorak <img src="../../assets/exercises/biceps.jpg"/></p>
+        <p class="exercise-card"><input formControlName="trbusnjaci" type="checkbox"/>Trbusnjaci <img src="../../assets/exercises/core.png"/></p>
+        <p class="exercise-card"><input formControlName="voznjaBicikla" type="checkbox"/>Voznja bicikla <img src="../../assets/exercises/byc.png"/></p>
+        <p class="exercise-card"><input formControlName="skakanje" type="checkbox"/>Skakanje <img src="../../assets/exercises/jumping.jpg"/></p>
+        <p class="exercise-card"><input formControlName="penjanjeUzStepenice" type="checkbox"/>Penjanje uz stepenice <img src="../../assets/exercises/climbingstairs.png"/></p>
+        <p class="exercise-card"><input formControlName="lateralnoPodizanje" type="checkbox"/>Laternalno podizanje <img src="../../assets/exercises/lateral.jpg"/></p>
+        <p class="exercise-card"><input formControlName="tricepsSklekovi" type="checkbox"/>Triceps sklekovi <img src="../../assets/exercises/tricepspushup.jpg"/></p>
+        <p class="exercise-card"><input formControlName="veslanjeSBucicama" type="checkbox"/>Veslanje s bucicama <img src="../../assets/exercises/rowingdumbbell.jpg"/></p>
+        <p class="exercise-card"><input formControlName="sklopke" type="checkbox"/>Sklopke <img src="../../assets/exercises/sklopke.jpg"/></p>
+        <p class="exercise-card"><input formControlName="izdrzaj" type="checkbox"/>Izdrzaj <img src="../../assets/exercises/plank.png"/></p>
+        <p class="exercise-card"><input formControlName="supermenPovlacenje" type="checkbox"/>Supermen povlacenje <img src="../../assets/exercises/superman.jpg"/></p>
+        <p class="exercise-card"><input formControlName="obrnutoVeslanje" type="checkbox"/>Obrnuto veslanje <img src="../../assets/exercises/reverserowing.png"/></p>
+        <p class="exercise-card"><input formControlName="latVeslanje" type="checkbox"/>Lat veslanje <img src="../../assets/exercises/latrowing.jpg"/></p>
+        <p class="exercise-card"><input formControlName="jednorucnoVeslanje" type="checkbox"/>Jednorucno veslanje</p>
+        <p class="exercise-card"><input formControlName="propadanje" type="checkbox"/>Propadanje</p>
+        <p class="exercise-card"><input formControlName="letenje" type="checkbox"/>Letenje</p>
+        <p class="exercise-card"><input formControlName="obrnutiBencPress" type="checkbox"/>Obrnuti benc press <img src="../../assets/exercises/reversebench.jpg"/></p>
+        <p class="exercise-card"><input formControlName="jednonoznoMrtvoDizanje" type="checkbox"/>Jednonozno mrtvo dizanje</p>
+        <p class="exercise-card"><input formControlName="skejtbordSkakanje" type="checkbox"/>Skejtbord skakanje <img src="../../assets/exercises/scateboard.png"/></p>
+        <p class="exercise-card" style="margin-bottom: 30px"><input formControlName="prednjiCucanj" type="checkbox"/>Prednji cucanj <img src="../../assets/exercises/frontsquat.jpg"/></p>
     </div>
-        <div fxFlex fxLayout="column" 
-    fxLayoutAlign="center start">
-        <p><input formControlName="skakanje" type="checkbox"/>Skakanje</p>
-        <p><input formControlName="penjanjeUzStepenice" type="checkbox"/>Penjanje uz stepenice</p>
-        <p><input formControlName="lateralnoPodizanje" type="checkbox"/>Laternalno podizanje</p>
-        <p><input formControlName="tricepsSklekovi" type="checkbox"/>Triceps sklekovi</p>
-        <p><input formControlName="veslanjeSBucicama" type="checkbox"/>Veslanje s bucicama</p>
-        <p><input formControlName="sklopke" type="checkbox"/>Sklopke</p>
-        <p><input formControlName="izdrzaj" type="checkbox"/>Izdrzaj</p>
-        <p><input formControlName="supermenPovlacenje" type="checkbox"/>Supermen povlacenje</p>
-        <p><input formControlName="obrnutoVeslanje" type="checkbox"/>Obrnuto veslanje</p>
-        <p><input formControlName="latVeslanje" type="checkbox"/>Lat veslanje</p>
-        <p><input formControlName="jednorucnoVeslanje" type="checkbox"/>Jednorucno veslanje</p>
-        <p><input formControlName="propadanje" type="checkbox"/>Propadanje</p>
-        <p><input formControlName="letenje" type="checkbox"/>Letenje</p>
-        <p><input formControlName="obrnutiBencPress" type="checkbox"/>Obrnuti benc press</p>
-        <p><input formControlName="jednonoznoMrtvoDizanje" type="checkbox"/>Jednonozno mrtvo dizanje</p>
-        <p><input formControlName="skejtbordSkakanje" type="checkbox"/>Skejtbord skakanje</p>
-        <p><input formControlName="prednjiCucanj" type="checkbox"/>Prednji cucanj</p>
-    </div>
-    <div fxFlex fxLayout="column" 
+    <div class="form-part" fxFlex fxLayout="column" 
     fxLayoutAlign="center center">
+    <h3>Select injuries if have</h3>
     <mat-form-field fxFlex appearance="fill">
         <mat-label>Arm injury</mat-label>
         <mat-select formControlName="armInjury">
@@ -143,16 +141,17 @@
           <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
         </mat-select>
     </mat-form-field>
-    <h4>Select risk ingredients:</h4>
-    <p>Gluten: <input formControlName="gluten" type="checkbox"/></p>
-    <p>Lactose: <input formControlName="lactose" type="checkbox"/></p>
-    <p>Peanuts: <input formControlName="peanuts" type="checkbox"/></p>
     </div>
-    </form>
+    <div class="form-part" fxFlex fxLayout="column" 
+    fxLayoutAlign="center start">
+    <h3>Select risk ingredients</h3>
+    <p class="risk-ingredient"><input formControlName="gluten" type="checkbox"/> Gluten</p>
+    <p class="risk-ingredient"><input formControlName="lactose" type="checkbox"/> Lactose</p>
+    <p class="risk-ingredient"><input formControlName="peanuts" type="checkbox"/> Peanuts</p>
+    </div>
     <div class="plan-btn-container" fxLayout="row" 
     fxLayoutAlign="end center">
         <button
-        class="plan-btn"
         mat-flat-button
         color="primary"
         (click)="getPlan()"
@@ -160,4 +159,5 @@
         Get plan
       </button>
     </div>
+    </form>
 </div>
