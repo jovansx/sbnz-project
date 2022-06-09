@@ -1,0 +1,56 @@
+package rules;
+
+import fitness.health.events.AddedFavoriteExercisesForBodyPart;
+import fitness.health.events.AddedFavoriteCardioExercises;
+import fitness.health.events.ExercisesFormed;
+import fitness.health.model.User;
+import fitness.health.model.Exercise;
+import fitness.health.model.enums.ProgressStrategy;
+import fitness.health.model.enums.BodyPart;
+
+import java.util.List;
+
+rule "Update exercises - Gain"
+    when
+         $u: User(progressStrategy == ProgressStrategy.LOW_BODY_MASS_INCREASE ||
+         progressStrategy == ProgressStrategy.BODY_MASS_INCREASE)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
+         $allExercises: List() from collect(Exercise())
+         not ExercisesFormed(userId == $u.id)
+    then
+        modify($u) { updateExercises($allExercises); };
+        insert (new ExercisesFormed($u.getId()));
+        
+end
+
+rule "Update exercises - Loss"
+    when
+         $u: User(progressStrategy == ProgressStrategy.LOW_BODY_MASS_LOSS ||
+         progressStrategy == ProgressStrategy.BODY_MASS_LOSS || progressStrategy == ProgressStrategy.HIGH_BODY_MASS_LOSS)
+         AddedFavoriteCardioExercises(userId == $u.id)
+         $allExercises: List() from collect(Exercise())
+         not ExercisesFormed(userId == $u.id)
+    then
+        modify($u) { updateExercises($allExercises); };
+        insert (new ExercisesFormed($u.getId()));
+end
+
+rule "Update exercises - Maintenance"
+    when
+         $u: User(progressStrategy == ProgressStrategy.BODY_MASS_MAINTENANCE)
+         AddedFavoriteCardioExercises(userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.BACK, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.ARMS, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.LEGS, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CORE, userId == $u.id)
+         AddedFavoriteExercisesForBodyPart(bodyPart == BodyPart.CHEST, userId == $u.id)
+         $allExercises: List() from collect(Exercise())
+         not ExercisesFormed(userId == $u.id)
+    then
+        modify($u) { updateExercises($allExercises); };
+        insert (new ExercisesFormed($u.getId()));
+end

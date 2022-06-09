@@ -1,8 +1,9 @@
 package fitness.health.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.ElementCollection;
@@ -14,12 +15,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+import fitness.health.dtos.RequestDTO;
 import fitness.health.model.enums.BodyPart;
 import fitness.health.model.enums.DietType;
+import fitness.health.model.enums.ExerciseIntensity;
 import fitness.health.model.enums.ExerciseType;
 import fitness.health.model.enums.Gender;
 import fitness.health.model.enums.ProgressStrategy;
+import fitness.health.model.enums.RecoveryStrategy;
 import fitness.health.model.enums.RiskIngredients;
 import fitness.health.model.enums.UserGoal;
 import fitness.health.model.enums.UserState;
@@ -45,46 +48,136 @@ public class User {
 	private UserGoal userGoal;
 	@ManyToMany
 	private List<Injury> injuries;
-//	--- Fields which drools will calculate
+
+	//	--- Fields which drools will calculate
+	@ManyToMany
+	private List<Injury> startingInjuries = new ArrayList<Injury>();
 	private int genderCoefficient;
-	private double calories;
-	@Enumerated(EnumType.STRING)
-	private ProgressStrategy progressStrategy;
 	private double strategyCoefficient;
 	@Enumerated(EnumType.STRING)
+	private ProgressStrategy progressStrategy;
+	@Enumerated(EnumType.STRING)
 	private UserState currentState;
-	private boolean exercisesAreFiltered;
 	@ManyToMany
 	private List<Exercise> exercises = new ArrayList<Exercise>();
-	private boolean foodIsFiltered;
 	@ManyToMany
 	private List<Foodstuff> foodstufList = new ArrayList<Foodstuff>();
-	
+	private double calories;
+
 	public User() {
 		super();
 	}
-
-	public User(double bodyWeight, double height, int ageInYears, int numberOfTrainingPerWeek, Gender gender,
-			List<Exercise> favoriteExercises, DietType dietType, List<RiskIngredients> riskIngredients,
-			UserGoal userGoal, List<Injury> injuries) {
-		super();
-		this.bodyWeight = bodyWeight;
-		this.height = height;
-		this.ageInYears = ageInYears;
-		this.numberOfTrainingPerWeek = numberOfTrainingPerWeek;
-		this.gender = gender;
-		this.favoriteExercises = favoriteExercises;
-		this.dietType = dietType;
-		this.riskIngredients = riskIngredients;
-		this.userGoal = userGoal;
-		this.injuries = injuries;
-	}
-
-	public List<Exercise> getFavoriteExerciesForBodyPartWithType(BodyPart bodyPart, ExerciseType type) {
-		return favoriteExercises.stream().filter(e -> e.getType() == type && e.getActiveBodyParts().contains(bodyPart))
-				.collect(Collectors.toList());
+	
+	public User(RequestDTO requestDTO) {
+		bodyWeight = requestDTO.getWeight();
+		height = requestDTO.getHeight();
+		ageInYears = requestDTO.getAge();
+		numberOfTrainingPerWeek = requestDTO.getNumberOfTrainingPerWeek();
+		gender = requestDTO.getGender();
+		dietType = requestDTO.getDietType();
+		userGoal = requestDTO.getGoal();
+		
 	}
 	
+	public Set<Exercise> updateExercisesByInjuries(List<Exercise> allExercises) {
+		Set<Exercise> deleteExercises = new HashSet<>();
+		for (Injury inj: injuries) {
+			if(inj.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) continue;
+			deleteExercises.addAll(allExercises.stream().filter(e -> e.getActiveBodyParts().contains(inj.getBodyPart())).collect(Collectors.toList()));
+		}
+		injuries.clear();
+		return deleteExercises;
+	}
+
+	public void addExercises(List<Exercise> filtered, List<Exercise> allExercises, BodyPart part, ExerciseType type, double numberToHave) {
+		int added = 0;
+		for (Exercise exercise : filtered) {
+			for (Exercise exercise2 : allExercises) {
+				if(exercise.getName().equals(exercise2.getName())) {
+					getExercises().add(exercise);
+					added += 1;
+				}
+			}
+		}
+		
+		int howManyToAdd = (int) numberToHave - added;
+		
+		List<Exercise> exercisesCandidates;
+		if(type == ExerciseType.CARDIO) {
+			exercisesCandidates = allExercises.stream().filter(
+					e -> !filtered.contains(e) && e.getType() == type)
+					.collect(Collectors.toList());
+		} else {
+			exercisesCandidates = allExercises.stream().filter(
+					e -> !filtered.contains(e) && e.getActiveBodyParts().contains(part) && e.getType() == type)
+					.collect(Collectors.toList());
+		}
+		
+		try {
+			if(exercisesCandidates.size() != 0)
+				getExercises().addAll(exercisesCandidates.subList(0, howManyToAdd));
+			else 
+				getExercises().addAll(allExercises.subList(0, howManyToAdd));
+		} catch (Exception ignored) {
+			getExercises().addAll(allExercises);
+		}
+		
+	}
+	
+	public void updateExercises(List<Exercise> allExercises) {
+		int initialSize = exercises.size();
+		Set<Exercise> set = new HashSet<>(exercises);
+		exercises.clear();
+		exercises.addAll(set);
+		int currentSize = exercises.size();
+		
+		Exercise firstExercise = exercises.get(0);
+		if(firstExercise.getType() == ExerciseType.CARDIO && initialSize <= 2) {
+//			Loss
+			if(initialSize > currentSize) {
+				List<Exercise> filteredList = allExercises.stream().filter(
+						e -> !exercises.contains(e) && e.getType() == ExerciseType.CARDIO).collect(Collectors.toList());
+				exercises.add(filteredList.get(0));
+			}
+		} else {
+//			Maintain and gain
+			List<Exercise> filteredList = allExercises.stream().filter(
+					e -> !exercises.contains(e) && e.getType() == ExerciseType.STRENGTH).collect(Collectors.toList());
+			try {
+				exercises.addAll(filteredList.subList(0, initialSize - currentSize));
+			} catch (Exception ignored) {
+				exercises.addAll(filteredList);
+			}
+		}
+		
+		for (Injury i : startingInjuries) {
+			if(i.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) {
+				exercises.stream()
+					.filter(e -> e.getActiveBodyParts().contains(i.getBodyPart()))
+					.forEach(e -> e.setIntesity(ExerciseIntensity.REDUCED_DUE_TO_REHABILITATION));
+			}
+		}
+		
+	}
+	
+	public void updateFoodstufListWithRiskyIngridients() {
+		RiskIngredients riskIngredient = riskIngredients.get(0);
+		foodstufList = this.foodstufList.stream().filter(f -> !f.getRiskIngredients().contains(riskIngredient)).collect(Collectors.toList());
+		riskIngredients.remove(riskIngredient);
+	}
+	
+	public void updateFoodstufList(List<Foodstuff> allFood) {
+		this.foodstufList = allFood.stream().filter(f -> f.getBelongsToDiets().contains(dietType)).collect(Collectors.toList());
+	}
+	
+	public List<Injury> getStartingInjuries() {
+		return startingInjuries;
+	}
+
+	public void setStartingInjuries(List<Injury> startingInjuries) {
+		this.startingInjuries = startingInjuries;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -192,28 +285,12 @@ public class User {
 		this.currentState = currentState;
 	}
 
-	public boolean isExercisesAreFiltered() {
-		return exercisesAreFiltered;
-	}
-
-	public void setExercisesAreFiltered(boolean exercisesAreFiltered) {
-		this.exercisesAreFiltered = exercisesAreFiltered;
-	}
-
 	public List<Exercise> getExercises() {
 		return exercises;
 	}
 
 	public void setExercises(List<Exercise> exercises) {
 		this.exercises = exercises;
-	}
-
-	public boolean isFoodIsFiltered() {
-		return foodIsFiltered;
-	}
-
-	public void setFoodIsFiltered(boolean foodIsFiltered) {
-		this.foodIsFiltered = foodIsFiltered;
 	}
 
 	public List<Foodstuff> getFoodstufList() {

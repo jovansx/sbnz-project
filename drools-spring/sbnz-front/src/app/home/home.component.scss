@@ -1,0 +1,51 @@
+.form-container {
+    padding: 2em 3em;
+    margin: auto;
+    background: linear-gradient(0deg, rgba(202,238,174,0.8379726890756303) 2%, rgba(148,187,233,0.8267682072829132) 78%);
+  }
+  
+  mat-form-field {
+    width: 70%;
+    font-size: large;
+  }
+  
+  .plan-btn-container {
+    width: 45vw;
+  }
+
+  img {
+    width: 75px;
+    height: 55px;
+    float: right;
+    margin-right: 5px;
+  }
+
+  .exercise-card {
+    background: linear-gradient(192deg, rgba(255,255,255,0.9248074229691877) 38%, rgba(63,81,214,0.41220238095238093) 81%);
+    width: 70%;
+    box-shadow: 1px 1px 3px rgb(77, 82, 81);
+    margin: 5px auto;
+  }
+
+  .exercise-card:hover {
+    transform: scale(1.01);
+  }
+
+  h3 {
+    margin-top: 10px;
+    margin-left: 2.5vw;
+    font-weight: 500;
+    width: 100%;
+  }
+
+  .form-part {
+    width: 45vw;
+    box-shadow: 0px 0px 3px rgb(77, 82, 81);
+    border-radius: 25px;
+    margin-bottom: 20px;
+    background-color: #fff;
+  }
+
+  .risk-ingredient {
+    margin-left: 2.5vw;
+  }

@@ -1,0 +1,29 @@
+package rules;
+
+import fitness.health.model.User;
+import fitness.health.model.Exercise;
+import fitness.health.model.Injury;
+import java.util.List;
+import java.util.Set;
+import fitness.health.events.ExercisesWhichUseInjuredPartsFiltered;
+
+rule "Filter exercise that use injured part"
+    when
+        $u: User( $injuries: injuries, $injuries.size != 0)
+        $allExercises: List() from collect(Exercise())
+    then
+    	Set<Exercise> all = $u.updateExercisesByInjuries($allExercises);
+    	all.stream().forEach(e -> delete(e));
+        update($u);
+        insert (new ExercisesWhichUseInjuredPartsFiltered($u.getId()));
+end
+
+rule "No injuries"
+    when
+        $u: User( $injuries: injuries, $injuries.size == 0)
+        $allExercises: List() from collect(Exercise())
+        not ExercisesWhichUseInjuredPartsFiltered(userId == $u.id)
+    then
+        insert (new ExercisesWhichUseInjuredPartsFiltered($u.getId()));
+end
+

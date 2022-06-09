@@ -1,0 +1,163 @@
+<div>
+    <form   class="form-container" 
+            [formGroup]="forma" 
+            fxLayout="column" 
+            fxLayoutAlign="center center">
+            <div class="form-part" fxFlex fxLayout="column" 
+            fxLayoutAlign="center center">
+        <!-- Weight -->
+        <mat-form-field appearance="fill" style="margin-top: 30px">
+            <mat-label>Weight (Kg)</mat-label>
+            <input matInput formControlName="weight" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("weight")
+            }}</mat-error>
+        </mat-form-field>
+        <!-- Height -->
+        <mat-form-field appearance="fill">
+            <mat-label>Height (m)</mat-label>
+            <input matInput formControlName="height" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("height")
+            }}</mat-error>
+        </mat-form-field>
+        <!-- Age -->
+        <mat-form-field appearance="fill">
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="age" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("age")
+            }}</mat-error>
+        </mat-form-field>
+        <!-- Number of trainings per week -->
+        <mat-form-field appearance="fill">
+            <mat-label>Number of trainings per week</mat-label>
+            <input matInput formControlName="numberOfTrainingPerWeek" required type="number"/>
+            <mat-error *ngIf="forma.invalid">{{
+            validator.validateRequired("numberOfTrainingPerWeek")
+            }}</mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="MALE">Male</mat-option>
+              <mat-option value="FEMALE">Female</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+            <mat-label>Diet type</mat-label>
+            <mat-select formControlName="dietType">
+              <mat-option value="GENERAL">General</mat-option>
+              <mat-option value="VEGAN">Vegan</mat-option>
+              <mat-option value="VEGETARIAN">Vegetarian</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+            <mat-label>Goal</mat-label>
+            <mat-select formControlName="userGoal">
+              <mat-option value="BODY_MASS_INCREASE">Increase weight</mat-option>
+              <mat-option value="BODY_MASS_LOSS">Lose weight</mat-option>
+              <mat-option value="BODY_MASS_MAINTENANCE">Maintain weight</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="form-part" fxFlex fxLayout="column" 
+    fxLayoutAlign="center start">
+        <h3>Select favorite exercises</h3>
+        <p class="exercise-card"><input formControlName="trcanje" type="checkbox"/> Trcanje <img src="../../assets/exercises/running.jpg"/></p>
+        <p class="exercise-card"><input formControlName="veslanje" type="checkbox"/> Veslanje <img src="../../assets/exercises/rowing.png"/></p>
+        <p class="exercise-card"><input formControlName="plivanje" type="checkbox"/>Plivanje <img src="../../assets/exercises/swimming.png"/></p>
+        <p class="exercise-card"><input formControlName="preskakanjeVijace" type="checkbox"/>Preskakanje vijace <img src="../../assets/exercises/skipping.jpg"/></p>
+        <p class="exercise-card"><input formControlName="bencPress" type="checkbox"/>Benc press <img src="../../assets/exercises/bench.png"/></p>
+        <p class="exercise-card"><input formControlName="mrtvoDizanje" type="checkbox"/>Mrtvo dizanje <img src="../../assets/exercises/deadlift.jpg"/></p>
+        <p class="exercise-card"><input formControlName="cucanj" type="checkbox"/>Cucanj <img src="../../assets/exercises/squat.png"/></p>
+        <p class="exercise-card"><input formControlName="zgibovi" type="checkbox"/>Zgibovi <img src="../../assets/exercises/pullup.jpg"/></p>
+        <p class="exercise-card"><input formControlName="sklekovi" type="checkbox"/>Sklekovi <img src="../../assets/exercises/pushup.jpg"/></p>
+        <p class="exercise-card"><input formControlName="militarryPress" type="checkbox"/>Militarry press <img src="../../assets/exercises/militarrypress.png"/></p>
+        <p class="exercise-card"><input formControlName="veslanjeUPretklonu" type="checkbox"/>Veslanje u pretklonu <img src="../../assets/exercises/rowingforward.png"/></p>
+        <p class="exercise-card"><input formControlName="tricepsEkstenzija" type="checkbox"/>Triceps ekstenzija <img src="../../assets/exercises/tricepsextension.jpg"/></p>
+        <p class="exercise-card"><input formControlName="pregibSBucicama" type="checkbox"/>Pregib s bucicama <img src="../../assets/exercises/biceps.jpg"/></p>
+        <p class="exercise-card"><input formControlName="iskorak" type="checkbox"/>Iskorak <img src="../../assets/exercises/lunges.jpg"/></p>
+        <p class="exercise-card"><input formControlName="trbusnjaci" type="checkbox"/>Trbusnjaci <img src="../../assets/exercises/core.png"/></p>
+        <p class="exercise-card"><input formControlName="voznjaBicikla" type="checkbox"/>Voznja bicikla <img src="../../assets/exercises/byc.png"/></p>
+        <p class="exercise-card"><input formControlName="skakanje" type="checkbox"/>Skakanje <img src="../../assets/exercises/jumping.jpg"/></p>
+        <p class="exercise-card"><input formControlName="penjanjeUzStepenice" type="checkbox"/>Penjanje uz stepenice <img src="../../assets/exercises/climbingstairs.png"/></p>
+        <p class="exercise-card"><input formControlName="lateralnoPodizanje" type="checkbox"/>Laternalno podizanje <img src="../../assets/exercises/lateral.jpg"/></p>
+        <p class="exercise-card"><input formControlName="tricepsSklekovi" type="checkbox"/>Triceps sklekovi <img src="../../assets/exercises/tricepspushup.jpg"/></p>
+        <p class="exercise-card"><input formControlName="veslanjeSBucicama" type="checkbox"/>Veslanje s bucicama <img src="../../assets/exercises/rowingdumbbell.jpg"/></p>
+        <p class="exercise-card"><input formControlName="sklopke" type="checkbox"/>Sklopke <img src="../../assets/exercises/sklopke.jpg"/></p>
+        <p class="exercise-card"><input formControlName="izdrzaj" type="checkbox"/>Izdrzaj <img src="../../assets/exercises/plank.png"/></p>
+        <p class="exercise-card"><input formControlName="supermenPovlacenje" type="checkbox"/>Supermen povlacenje <img src="../../assets/exercises/superman.jpg"/></p>
+        <p class="exercise-card"><input formControlName="obrnutoVeslanje" type="checkbox"/>Obrnuto veslanje <img src="../../assets/exercises/reverserowing.png"/></p>
+        <p class="exercise-card"><input formControlName="latVeslanje" type="checkbox"/>Lat veslanje <img src="../../assets/exercises/latrowing.jpg"/></p>
+        <p class="exercise-card"><input formControlName="jednorucnoVeslanje" type="checkbox"/>Jednorucno veslanje <img src="../../assets/exercises/rowingdumbbell.jpg"/></p>
+        <p class="exercise-card"><input formControlName="propadanje" type="checkbox"/>Propadanje <img src="../../assets/exercises/dips.jpg"/></p>
+        <p class="exercise-card"><input formControlName="letenje" type="checkbox"/>Letenje <img src="../../assets/exercises/flying.jpg"/></p>
+        <p class="exercise-card"><input formControlName="obrnutiBencPress" type="checkbox"/>Obrnuti benc press <img src="../../assets/exercises/reversebench.jpg"/></p>
+        <p class="exercise-card"><input formControlName="jednonoznoMrtvoDizanje" type="checkbox"/>Jednonozno mrtvo dizanje <img src="../../assets/exercises/oneleg.PNG"/></p>
+        <p class="exercise-card"><input formControlName="skejtbordSkakanje" type="checkbox"/>Skejtbord skakanje <img src="../../assets/exercises/scateboard.png"/></p>
+        <p class="exercise-card" style="margin-bottom: 30px"><input formControlName="prednjiCucanj" type="checkbox"/>Prednji cucanj <img src="../../assets/exercises/frontsquat.jpg"/></p>
+    </div>
+    <div class="form-part" fxFlex fxLayout="column" 
+    fxLayoutAlign="center center">
+    <h3>Select injuries if have</h3>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Arm injury</mat-label>
+        <mat-select formControlName="armInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Back injury</mat-label>
+        <mat-select formControlName="backInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Leg injury</mat-label>
+        <mat-select formControlName="legInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Core injury</mat-label>
+        <mat-select formControlName="coreInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex appearance="fill">
+        <mat-label>Chest injury</mat-label>
+        <mat-select formControlName="chestInjury">
+          <mat-option value="NONE">No injury</mat-option>
+          <mat-option value="AVOIDANCE">Avoid chosen part</mat-option>
+          <mat-option value="REHABILITATION">Rehabilitate chosen part</mat-option>
+        </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="form-part" fxFlex fxLayout="column" 
+    fxLayoutAlign="center start">
+    <h3>Select risk ingredients</h3>
+    <p class="risk-ingredient"><input formControlName="gluten" type="checkbox"/> Gluten</p>
+    <p class="risk-ingredient"><input formControlName="lactose" type="checkbox"/> Lactose</p>
+    <p class="risk-ingredient"><input formControlName="peanuts" type="checkbox"/> Peanuts</p>
+    </div>
+    <div class="plan-btn-container" fxLayout="row" 
+    fxLayoutAlign="end center">
+        <button
+        mat-flat-button
+        color="primary"
+        (click)="getPlan()"
+      >
+        Get plan
+      </button>
+    </div>
+    </form>
+</div>
