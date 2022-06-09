@@ -94,9 +94,14 @@ export class HomeComponent implements OnInit {
       favoriteExerciseNames: favoriteExercises,
       injuries
     }
-    this.router.navigate(["/results"]);
 
-    this.fhService.getPlan(dto);
+    this.fhService.getPlan(dto).subscribe(
+      (res) => {
+        this.fhService.planResponse = res;
+        this.router.navigate(["/results"]);
+      },
+      (err) => {console.log(err)}
+    )
   }
 
   private _getRiskIngredients(): string[] {

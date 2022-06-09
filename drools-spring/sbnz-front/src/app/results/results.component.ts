@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { FitnessHealthService } from '../services/fitness-health.service';
 
 @Component({
@@ -10,19 +9,18 @@ import { FitnessHealthService } from '../services/fitness-health.service';
 })
 export class ResultsComponent implements OnInit {
 
-  planSubscription: Subscription | undefined;
   plan: any | undefined;
 
   constructor(private fhService: FitnessHealthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.planSubscription = this.fhService.planResponse.subscribe((response) => this.plan = response)
+    this.plan = this.fhService.planResponse;
   }
 
-  // ngAfterViewInit() {
-  //   if (!this.plan)
-  //     this.backToHome();
-  // }
+  ngAfterViewInit() {
+    if (!this.plan)
+      this.backToHome();
+  }
 
   convertExerciseType(type: string | undefined): string {
     if (type == "CARDIO") return "Cardio";
