@@ -82,12 +82,13 @@ public class User {
 	public List<Exercise> updateExercisesByInjuries(List<Exercise> allExercises) {
 		Injury firstInjury = injuries.get(0);
 		if(firstInjury.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) {
-			injuries.remove(0);
 			return new ArrayList<Exercise>();
 		}
-		allExercises = allExercises.stream().filter(e -> e.getActiveBodyParts().contains(firstInjury.getBodyPart())).collect(Collectors.toList());
-		injuries.remove(firstInjury);
-		return allExercises;
+		return allExercises.stream().filter(e -> e.getActiveBodyParts().contains(firstInjury.getBodyPart())).collect(Collectors.toList());
+	}
+	
+	public void removeFirstInjury() {
+		injuries.remove(0);
 	}
 
 	public void addExercises(List<Exercise> filtered, List<Exercise> allExercises, BodyPart part, ExerciseType type, double numberToHave) {
