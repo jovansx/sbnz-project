@@ -82,7 +82,7 @@ public class User {
 	public List<Exercise> updateExercisesByInjuries(List<Exercise> allExercises) {
 		Injury firstInjury = injuries.get(0);
 		if(firstInjury.getRecoveryStrategy() == RecoveryStrategy.REHABILITATION) {
-			injuries.remove(firstInjury);
+			injuries.remove(0);
 			return new ArrayList<Exercise>();
 		}
 		allExercises = allExercises.stream().filter(e -> e.getActiveBodyParts().contains(firstInjury.getBodyPart())).collect(Collectors.toList());

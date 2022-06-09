@@ -1,1 +1,40 @@
-<p>results works!</p>
+<main 
+    fxLayout="column" 
+    fxLayoutAlign="center center">
+    <section 
+        fxLayout="column" 
+        fxLayoutAlign="center center">
+        <h3>Recommended calories: {{plan?.numberOfCaloriesPerDay}}</h3>
+    </section>
+    <section 
+        fxLayout="column" 
+        fxLayoutAlign="center start">
+        <h3>Recommended exercises:</h3>
+        <ul>
+            <li *ngFor="let exercise of plan?.exercises">
+                {{exercise?.name}} <span>({{convertExerciseType(exercise?.type)}}) - {{convertExerciseIntesity(exercise?.intesity)}}</span>
+            </li>
+        </ul>
+    </section>
+    <section 
+        fxLayout="column" 
+        fxLayoutAlign="center start">
+        <h3>Recommended foodstuffs:</h3>
+        <ul>
+            <li *ngFor="let foodstuff of plan?.foodList">
+                {{foodstuff?.name}}
+            </li>
+        </ul>
+    </section>
+    <div 
+        class="plan-btn-container" 
+        fxLayout="row" 
+        fxLayoutAlign="end center">
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="backToHome()">
+            Back
+        </button>
+    </div>
+</main>

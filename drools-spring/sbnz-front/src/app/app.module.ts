@@ -9,6 +9,9 @@ import { MaterialModule } from './core/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
+
+import { FitnessHealthService } from './services/fitness-health.service';
 
 @NgModule({
   declarations: [
@@ -23,9 +26,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [FitnessHealthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
